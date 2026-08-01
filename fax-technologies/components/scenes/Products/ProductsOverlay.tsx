@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Sparkles, X } from "lucide-react";
 import { useState } from "react";
-import { NoomoCard } from "@/components/ui/noomo-card";
+import { FramerCard } from "@/components/ui/framer-card";
 import { revealUp } from "@/lib/animation/motion";
 
 const categories = ["All Showcase", "AI Agents", "Enterprise Platforms", "Mobile Apps"];
@@ -15,6 +15,7 @@ const showcaseItems = [
     title: "Autonomous Sales Agent CRM",
     client: "FabX Labs",
     year: "2026",
+    tint: "rgba(139,92,246,0.08)",
     desc: "AI-driven CRM system with automated lead intelligence, voice calling agents, and automated pipeline sync.",
     deliverables: ["RAG Architecture", "Real-Time Telemetry", "Next.js & WebGL UI"],
   },
@@ -24,6 +25,7 @@ const showcaseItems = [
     title: "Global Supply Chain ERP",
     client: "Nexus Global",
     year: "2026",
+    tint: "rgba(34,211,238,0.08)",
     desc: "Real-time ledger reconciliation, predictive inventory management, and multi-region cloud edge synchronization.",
     deliverables: ["Serverless Mesh", "Vector Search", "High-Throughput APIs"],
   },
@@ -33,6 +35,7 @@ const showcaseItems = [
     title: "AI Agent Orchestration Studio",
     client: "Vanguard Tech",
     year: "2026",
+    tint: "rgba(245,158,11,0.08)",
     desc: "Visual node-based agent workflow builder allowing enterprises to deploy multi-agent autonomous teams in minutes.",
     deliverables: ["Visual Canvas", "Sub-10ms Latency", "Multi-LLM Routing"],
   },
@@ -49,7 +52,7 @@ export function ProductsOverlay() {
   return (
     <section id="products" className="relative min-h-screen flex items-center justify-center px-6 py-28">
       <div className="max-w-6xl mx-auto z-10 w-full">
-        {/* Kinetic Header */}
+        {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
             <motion.div
@@ -59,7 +62,7 @@ export function ProductsOverlay() {
               viewport={{ once: false, amount: 0.3 }}
               className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-cyan-400 mb-3 px-4 py-1.5 rounded-full border border-cyan-400/20 bg-cyan-950/20 backdrop-blur-md"
             >
-              <Sparkles className="size-3.5" /> Noomo-Grade Digital Showcase
+              <Sparkles className="size-3.5" /> Framer-Powered Digital Showcase
             </motion.div>
             <motion.h2
               variants={revealUp}
@@ -90,15 +93,22 @@ export function ProductsOverlay() {
           </div>
         </div>
 
-        {/* 3D Tilt Showcase Cards */}
+        {/* Framer-Motion Animated Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {filteredItems.map((item) => (
-            <NoomoCard key={item.id} onClick={() => setSelectedItem(item)}>
+          {filteredItems.map((item, idx) => (
+            <FramerCard
+              key={item.id}
+              tint={item.tint}
+              hoverRotate={idx % 2 === 0 ? 1.5 : -1.5}
+              hoverScale={1.04}
+              onClick={() => setSelectedItem(item)}
+              className="cursor-pointer group"
+            >
               <div className="flex items-center justify-between text-xs font-mono text-cyan-400 mb-4">
                 <span>{item.category}</span>
                 <span>{item.year}</span>
               </div>
-              <h3 className="font-display text-2xl font-semibold text-white mb-3 flex items-center justify-between group">
+              <h3 className="font-display text-2xl font-semibold text-white mb-3 flex items-center justify-between">
                 {item.title}
                 <ArrowUpRight className="size-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 text-cyan-400" />
               </h3>
@@ -113,12 +123,12 @@ export function ProductsOverlay() {
                   </span>
                 ))}
               </div>
-            </NoomoCard>
+            </FramerCard>
           ))}
         </div>
       </div>
 
-      {/* Interactive Case Study Modal */}
+      {/* Case Study Modal */}
       <AnimatePresence>
         {selectedItem && (
           <motion.div
@@ -152,7 +162,6 @@ export function ProductsOverlay() {
                 <span className="font-mono text-white/50">Engine Architecture: WebGL / R3F / Sub-10ms APIs</span>
                 <button
                   onClick={() => setSelectedItem(null)}
-                  aria-label="Close case study preview"
                   className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-white/90"
                 >
                   Close Preview
