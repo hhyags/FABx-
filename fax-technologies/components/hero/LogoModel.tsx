@@ -14,7 +14,8 @@ const modelPath = "/models/fabx-logo.glb";
 
 export function LogoModel({ reducedMotion }: LogoModelProps) {
   const groupRef = useRef<Object3D>(null);
-  const introProgressRef = useRef(reducedMotion ? 1 : 0);
+  const targetOpacityRef = useRef(reducedMotion ? 1 : 0);
+  const currentOpacityRef = useRef(reducedMotion ? 1 : 0);
   const materialsRef = useRef<Material[]>([]);
   const gltf = useGLTF(modelPath);
   const logoScene = useMemo(() => gltf.scene.clone(true), [gltf.scene]);
@@ -51,15 +52,29 @@ export function LogoModel({ reducedMotion }: LogoModelProps) {
     if (!group) return;
 
     const progress = TimelineController.getProgress();
-    // Fade out logo mesh as we transition into Birth particle scene (0.10 to 0.18)
-    const fadeOut = MathUtils.clamp(1 - (progress - 0.08) / 0.1, 0, 1);
 
-    const time = clock.getElapsedTime();
-    introProgressRef.current = MathUtils.lerp(introProgressRef.current, fadeOut, 0.08);
+    // Narrative Logo Lifecycle:
+    // Visible in Hero (progress <= 0.10)
+    // Dissolves and hides completely (opacity = 0) during Birth, Network, Engineering, Products, Impact, Process, Values (0.10 < progress < 0.92)
+    // Reforms and fades back in during Outro / Contact (progress >= 0.92)
+    let opacityTarget = 0;
+    if (progress <= 0.10) {
+      opacityTarget = MathUtils.clamp(1 - progress / 0.10, 0, 1);
+    } else if (progress >= 0.92) {
+      opacityTarget = MathUtils.clamp((progress - 0.92) / 0.08, 0, 1);
+    }
+
+    targetOpacityRef.current = opacityTarget;
+    currentOpacityRef.current = MathUtils.lerp(currentOpacityRef.current, targetOpacityRef.current, 0.08);
 
     materialsRef.current.forEach((material) => {
-      material.opacity = introProgressRef.current;
+      material.opacity = currentOpacityRef.current;
     });
+
+    // Hide object completely from frustum render when fully transparent
+    group.visible = currentOpacityRef.current > 0.01;
+
+    if (!group.visible) return;
 
     if (reducedMotion) {
       group.position.y = 0.35;
@@ -68,6 +83,7 @@ export function LogoModel({ reducedMotion }: LogoModelProps) {
       return;
     }
 
+    const time = clock.getElapsedTime();
     const floatY = Math.sin(time * 0.72) * 0.09;
     const breath = 1 + Math.sin(time * 0.82) * 0.012;
 
@@ -75,7 +91,7 @@ export function LogoModel({ reducedMotion }: LogoModelProps) {
     group.rotation.y = MathUtils.lerp(
       group.rotation.y,
       -0.08 + time * 0.1 + pointer.x * 0.1,
-      0.035,
+      0.035
     );
     group.rotation.x = MathUtils.lerp(group.rotation.x, pointer.y * -0.045, 0.04);
     group.rotation.z = MathUtils.lerp(group.rotation.z, pointer.x * -0.025, 0.04);
