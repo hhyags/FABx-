@@ -1,0 +1,17 @@
+{
+  "models": [
+    {
+      "id": "fabx-logo",
+      "path": "/models/fabx-logo.glb",
+      "size": "70MB"
+    }
+  ],
+  "textures": [],
+  "hdr": [],
+  "fonts": [
+    {
+      "id": "inter",
+      "family": "Inter"
+    }
+  ]
+}

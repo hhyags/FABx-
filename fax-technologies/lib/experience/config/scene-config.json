@@ -1,0 +1,94 @@
+{
+  "scenes": {
+    "hero": {
+      "id": "hero",
+      "range": [0.0, 0.12],
+      "camera": {
+        "position": [0, 0.5, 8.2],
+        "target": [0, 0.35, 0],
+        "fov": 34
+      },
+      "lighting": "studio"
+    },
+    "birth": {
+      "id": "birth",
+      "range": [0.12, 0.25],
+      "camera": {
+        "position": [0, 0.2, 5.5],
+        "target": [0, 0, 0],
+        "fov": 38
+      },
+      "lighting": "purple"
+    },
+    "network": {
+      "id": "network",
+      "range": [0.25, 0.4],
+      "camera": {
+        "position": [0, 0, 10.0],
+        "target": [0, 0, 0],
+        "fov": 42
+      },
+      "lighting": "blue"
+    },
+    "engineering": {
+      "id": "engineering",
+      "range": [0.4, 0.55],
+      "camera": {
+        "position": [-2, 1, 7.5],
+        "target": [0, 0, 0],
+        "fov": 36
+      },
+      "lighting": "white"
+    },
+    "products": {
+      "id": "products",
+      "range": [0.55, 0.7],
+      "camera": {
+        "position": [0, 1.2, 9.0],
+        "target": [0, 0, 0],
+        "fov": 35
+      },
+      "lighting": "warm"
+    },
+    "impact": {
+      "id": "impact",
+      "range": [0.7, 0.8],
+      "camera": {
+        "position": [0, 0.8, 6.8],
+        "target": [0, 0, 0],
+        "fov": 38
+      },
+      "lighting": "gold"
+    },
+    "process": {
+      "id": "process",
+      "range": [0.8, 0.88],
+      "camera": {
+        "position": [1.5, 0.5, 8.0],
+        "target": [0, 0, 0],
+        "fov": 36
+      },
+      "lighting": "cyan"
+    },
+    "values": {
+      "id": "values",
+      "range": [0.88, 0.94],
+      "camera": {
+        "position": [0, 0.4, 7.0],
+        "target": [0, 0, 0],
+        "fov": 34
+      },
+      "lighting": "purple"
+    },
+    "contact": {
+      "id": "contact",
+      "range": [0.94, 1.0],
+      "camera": {
+        "position": [0, 0.5, 8.2],
+        "target": [0, 0.35, 0],
+        "fov": 34
+      },
+      "lighting": "minimal"
+    }
+  }
+}
