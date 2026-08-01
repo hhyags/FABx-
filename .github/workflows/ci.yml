@@ -1,0 +1,37 @@
+name: FAX Technologies CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: fax-technologies/package-lock.json
+
+      - name: Install Dependencies
+        working-directory: fax-technologies
+        run: npm ci
+
+      - name: Run Typecheck
+        working-directory: fax-technologies
+        run: npm run typecheck
+
+      - name: Run Linter
+        working-directory: fax-technologies
+        run: npm run lint
+
+      - name: Production Build Verification
+        working-directory: fax-technologies
+        run: npm run build

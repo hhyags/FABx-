@@ -1,0 +1,25 @@
+{
+  "id": "godowniq",
+  "title": "GodownIQ",
+  "client": "Logistics & Warehousing",
+  "category": "Dashboard",
+  "year": "2026",
+  "metric": "Delivered in 4 weeks",
+  "timeToDeliver": "Delivered in 4 weeks",
+  "shortDesc": "Warehouse inventory tracking, SKU audit logging, and automated batch reconciliation.",
+  "problem": "Warehouse managers struggled with stock discrepancies between physical inventory counts and ledger spreadsheets, resulting in order fulfillment delays.",
+  "whatWeBuilt": "Engineered a real-time warehouse inventory management web app with barcode scanning, SKU audit logging, and automated stock level alerts.",
+  "honestScopeNote": "Inventory forecasting operates on scheduled CSV/DB batch synchronization rather than live IoT telemetry.",
+  "deliverables": [
+    "SKU Inventory Tracking",
+    "Batch Barcode Scanner UI",
+    "Stock Reorder Alerts",
+    "CSV Data Export"
+  ],
+  "architectureNodes": [
+    "Stock Intake",
+    "Ledger DB",
+    "Alert Trigger",
+    "Dashboard UI"
+  ]
+}

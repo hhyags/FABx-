@@ -1,0 +1,25 @@
+{
+  "id": "medflow-ai",
+  "title": "MedFlow AI",
+  "client": "Healthcare Client",
+  "category": "AI/Agentic",
+  "year": "2026",
+  "metric": "8 hospital roles supported",
+  "timeToDeliver": "Delivered in 4 weeks",
+  "shortDesc": "Hospital workflow triage and role-based operational coordination system.",
+  "problem": "Hospitals waste over 40% of nursing and admin hours manually routing patient intake, staff allocation, and shift handover requests across fragmented channels.",
+  "whatWeBuilt": "Built a role-aware operational triage hub integrating clinical intake forms, automated patient queue routing, and real-time operational notifications.",
+  "honestScopeNote": "Initial architecture deployed a rules-based triage chatbot with human-in-the-loop escalation rather than a fully autonomous agentic loop to guarantee zero medical hallucination risk.",
+  "deliverables": [
+    "Role-Aware Routing Engine",
+    "Intake Form Parsing",
+    "Human-in-the-Loop Escalation",
+    "Real-Time Hospital Dashboard"
+  ],
+  "architectureNodes": [
+    "Intake API",
+    "Triage Engine",
+    "Role Dispatch",
+    "Audit Log"
+  ]
+}

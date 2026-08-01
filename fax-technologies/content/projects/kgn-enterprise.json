@@ -1,0 +1,25 @@
+{
+  "id": "kgn-enterprise",
+  "title": "KGN Water Suppliers",
+  "client": "KGN Enterprises",
+  "category": "Portfolio & Stock",
+  "year": "2026",
+  "metric": "₹6.25L client revenue enabled",
+  "timeToDeliver": "Delivered in 2 weeks",
+  "shortDesc": "Commercial water supplier portfolio showcase & stock inventory management app.",
+  "problem": "KGN needed a modern digital presence to capture B2B supply contracts and a streamlined internal interface to track daily container dispatches.",
+  "whatWeBuilt": "Designed and deployed a responsive portfolio platform showcasing commercial water supply services combined with an internal stock tracking panel.",
+  "honestScopeNote": "Scope focused on responsive client portfolio presentation and internal stock management rather than online payment gateway integration.",
+  "deliverables": [
+    "Commercial Portfolio Site",
+    "B2B Inquiry Form",
+    "Container Dispatch Log",
+    "Mobile Responsive UI"
+  ],
+  "architectureNodes": [
+    "Client Portal",
+    "Inquiry Handler",
+    "Dispatch Log",
+    "Admin UI"
+  ]
+}

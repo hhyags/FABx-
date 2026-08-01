@@ -2,6 +2,7 @@
 
 import Lenis from "lenis";
 import { useEffect, useRef } from "react";
+import { CanvasErrorBoundary } from "@/components/experience/CanvasErrorBoundary";
 import { SceneManager } from "@/components/experience/SceneManager";
 import { Hero } from "@/components/hero/Hero";
 import { BirthOverlay } from "@/components/scenes/Birth/BirthOverlay";
@@ -56,8 +57,10 @@ export function ExperienceEngine() {
       {/* Precision Cursor Ring */}
       <AnimatedCursor />
 
-      {/* 3D WebGL Canvas Layer */}
-      <SceneManager reducedMotion={reducedMotion} />
+      {/* 3D WebGL Canvas Layer with Error Boundary Fallback Insurance */}
+      <CanvasErrorBoundary>
+        <SceneManager reducedMotion={reducedMotion} />
+      </CanvasErrorBoundary>
 
       {/* HTML DOM Storyline Sections */}
       <div className="relative z-10">

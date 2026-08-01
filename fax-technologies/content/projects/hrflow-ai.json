@@ -1,0 +1,25 @@
+{
+  "id": "hrflow-ai",
+  "title": "HRFlow AI",
+  "client": "Recruitment Agency",
+  "category": "AI/Agentic",
+  "year": "2026",
+  "metric": "18-point audit executed",
+  "timeToDeliver": "Delivered in 3 weeks",
+  "shortDesc": "Automated resume parsing, candidate scoring, and interview scheduling pipeline.",
+  "problem": "Recruiters spend 25+ hours per week manually reviewing unstructured PDF resumes and coordinating screening calls.",
+  "whatWeBuilt": "Built an automated resume parsing pipeline that extracts candidate skills, scores relevance against job descriptions, and dispatches automated interview booking links.",
+  "honestScopeNote": "Built under a 3-week sprint. UX audit identified 18 friction points; initial release prioritized automated candidate resume filtering over custom enterprise ATS sync.",
+  "deliverables": [
+    "PDF Resume Parser",
+    "Candidate Scoring Model",
+    "Calendar Scheduling Link Dispatch",
+    "Recruiter Review Dashboard"
+  ],
+  "architectureNodes": [
+    "PDF Ingestion",
+    "Skill Extractor",
+    "Scoring Engine",
+    "Calendar API"
+  ]
+}
