@@ -1,34 +1,38 @@
 import type { Metadata, Viewport } from "next";
 import { inter, jetBrainsMono, spaceGrotesk } from "@/app/fonts";
+import { GlobalCanvas } from "@/components/experience/GlobalCanvas";
 import { Footer } from "@/components/layout/footer";
 import { Navigation } from "@/components/layout/navigation";
 import { Providers } from "@/components/providers/providers";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
-  title: "FABX Technologies — Building Intelligent Digital Products That Scale",
+  title: "FABX Innovations — AI Engineering & Digital Product Studio",
   description:
-    "FABX Technologies architects AI-powered software, enterprise platforms, autonomous agent workflows, and modern digital ecosystems for fast-growing enterprises.",
+    "FABX Innovations designs, engineers, and builds intelligent software — AI products, enterprise platforms, SaaS systems, and business automation for growing companies.",
   keywords: [
-    "FABX Technologies",
-    "AI Development",
+    "FABX Innovations",
+    "AI Engineering",
+    "Digital Product Studio",
+    "AI Agents",
     "Enterprise Software",
-    "Autonomous AI Agents",
-    "Cloud Architecture",
-    "Digital Products",
+    "SaaS Development",
+    "CRM Development",
+    "ERP Systems",
+    "Business Automation",
   ],
   openGraph: {
-    title: "FABX Technologies — Building Intelligent Digital Products That Scale",
+    title: "FABX Innovations — AI Engineering & Digital Product Studio",
     description:
-      "FABX Technologies architects AI-powered software, enterprise platforms, autonomous agent workflows, and modern digital ecosystems.",
-    url: "https://fabx.tech",
-    siteName: "FABX Technologies",
+      "We design, engineer, and build intelligent software — AI products, enterprise platforms, and business automation.",
+    url: "https://fabxinnovations.com",
+    siteName: "FABX Innovations",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "FABX Technologies",
-    description: "Building Intelligent Digital Products That Scale.",
+    title: "FABX Innovations",
+    description: "AI Engineering & Digital Product Studio.",
   },
 };
 
@@ -47,9 +51,12 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetBrainsMono.variable}`}
     >
-      <body className="bg-[#050505] text-white selection:bg-brand-purple selection:text-white">
+      <body className="bg-[#050505] text-white selection:bg-[hsl(192,82%,46%,0.3)] selection:text-white">
         <Providers>
-          <div className="flex min-h-screen flex-col">
+          {/* Site-wide WebGL 3D Canvas Layer with 3D FABX logo */}
+          <GlobalCanvas />
+
+          <div className="relative z-10 flex min-h-screen flex-col">
             <Navigation />
             <main className="flex-1">{children}</main>
             <Footer />

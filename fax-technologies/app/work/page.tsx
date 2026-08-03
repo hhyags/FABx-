@@ -1,12 +1,12 @@
 "use client";
 
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
-import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
-import { ALL_PROJECTS, ProjectData } from "@/lib/data/projects";
+import { Suspense } from "react";
+import { ALL_PROJECTS } from "@/lib/data/projects";
+import { revealUp, fadeIn, staggerContainer } from "@/lib/animation/motion";
 
 const categories = ["All Work", "AI/Agentic", "Dashboard", "Portfolio & Stock"];
 
@@ -14,21 +14,6 @@ function WorkContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const activeCategory = searchParams.get("category") || "All Work";
-  const reducedMotion = usePrefersReducedMotion();
-
-  const [hoveredProject, setHoveredProject] = useState<ProjectData | null>(null);
-
-  // Mouse motion values for Noomo-style cursor-follow thumbnail preview
-  const mouseX = useMotionValue(-100);
-  const mouseY = useMotionValue(-100);
-  const springX = useSpring(mouseX, { stiffness: 350, damping: 25 });
-  const springY = useSpring(mouseY, { stiffness: 350, damping: 25 });
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (reducedMotion) return;
-    mouseX.set(e.clientX + 16);
-    mouseY.set(e.clientY + 16);
-  };
 
   const setCategory = (cat: string) => {
     if (cat === "All Work") {
@@ -43,85 +28,85 @@ function WorkContent() {
   );
 
   return (
-    <div
-      onMouseMove={handleMouseMove}
-      className="min-h-screen bg-[#050505] text-white pt-32 pb-24 px-6 relative overflow-hidden"
-    >
-      {/* Cursor-Follow Floating Preview Card */}
-      {!reducedMotion && hoveredProject && (
+    <div className="min-h-screen bg-transparent text-white pt-32 pb-24 px-6">
+      <div className="container-editorial">
+        {/* Header */}
         <motion.div
-          style={{ x: springX, y: springY }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
-          className="pointer-events-none fixed z-50 p-5 rounded-2xl border border-cyan-400/40 bg-black/80 backdrop-blur-xl shadow-[0_0_40px_rgba(34,211,238,0.25)] max-w-xs"
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+          className="mb-16"
         >
-          <div className="font-mono text-[10px] uppercase text-cyan-400 mb-1">
-            {hoveredProject.category} • {hoveredProject.timeToDeliver}
-          </div>
-          <h4 className="font-display text-base font-bold text-white mb-2">{hoveredProject.title}</h4>
-          <p className="text-xs text-white/70 line-clamp-2">{hoveredProject.shortDesc}</p>
+          <motion.p variants={fadeIn} className="text-overline mb-6">
+            Work Index
+          </motion.p>
+          <motion.h1 variants={revealUp} className="text-editorial text-white mb-6">
+            Selected Projects.
+          </motion.h1>
         </motion.div>
-      )}
 
-      <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div>
-            <p className="font-mono text-xs uppercase tracking-[0.3em] text-cyan-400 mb-3">
-              Work Index & Delivered Software
-            </p>
-            <h1 className="font-display text-4xl sm:text-7xl font-bold tracking-tight text-white">
-              Selected <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple via-cyan-400 to-white">Projects.</span>
-            </h1>
-          </div>
-
-          {/* URL SearchParams Filter Pills */}
-          <div className="flex flex-wrap gap-2">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setCategory(cat)}
-                className={`px-5 py-2 rounded-full font-mono text-xs tracking-wider transition-all ${
-                  activeCategory === cat
-                    ? "bg-white text-black font-semibold shadow-[0_0_20px_rgba(255,255,255,0.4)]"
-                    : "border border-white/10 bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
+        {/* Filter Pills */}
+        <div className="mb-12 flex flex-wrap gap-2">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setCategory(cat)}
+              className={`rounded-full px-5 py-2 font-mono text-[10px] uppercase tracking-[0.15em] transition-all duration-300 ${
+                activeCategory === cat
+                  ? "bg-white text-black font-semibold"
+                  : "border border-white/[0.08] text-white/40 hover:text-white/70 hover:bg-white/[0.04]"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
         </div>
 
-        {/* Project Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredProjects.map((project) => (
-            <Link
+        {/* Project List */}
+        <div className="grid gap-0">
+          {filteredProjects.map((project, idx) => (
+            <motion.div
               key={project.id}
-              href={`/work/${project.id}`}
-              onMouseEnter={() => setHoveredProject(project)}
-              onMouseLeave={() => setHoveredProject(null)}
-              className="group p-8 rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl hover:border-cyan-400/50 hover:bg-white/[0.06] transition-all flex flex-col justify-between"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.3 }}
+              transition={{ delay: idx * 0.06, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div>
-                <div className="flex items-center justify-between text-xs font-mono text-cyan-400 mb-4">
-                  <span>{project.category}</span>
-                  <span>{project.metric || project.timeToDeliver}</span>
+              <Link
+                href={`/work/${project.id}`}
+                className="group grid grid-cols-1 gap-4 border-t border-white/[0.06] py-10 transition-all duration-500 hover:bg-white/[0.015] md:grid-cols-[120px_1fr_40px] md:items-center md:gap-8 md:px-4 md:py-12"
+              >
+                {/* Meta */}
+                <div className="flex gap-4 md:flex-col md:gap-1">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[hsl(192,82%,46%)]">
+                    {project.category}
+                  </span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/20">
+                    {project.timeToDeliver}
+                  </span>
                 </div>
-                <h3 className="font-display text-3xl font-bold text-white mb-3 flex items-center justify-between">
-                  {project.title}
-                  <ArrowUpRight className="size-6 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 text-cyan-400" />
-                </h3>
-                <p className="text-sm text-white/70 leading-relaxed mb-6">{project.shortDesc}</p>
-              </div>
 
-              {/* Scope Honesty Tag */}
-              <div className="border-t border-white/10 pt-4 mt-4">
-                <div className="font-mono text-[10px] text-white/40 uppercase mb-1">Scope Guarantee</div>
-                <p className="text-xs text-white/50 italic line-clamp-2">{project.honestScopeNote}</p>
-              </div>
-            </Link>
+                {/* Title & Description */}
+                <div>
+                  <h3 className="font-display text-headline font-semibold text-white transition-colors duration-300">
+                    {project.title}
+                  </h3>
+                  <p className="mt-2 max-w-xl text-body text-white/30 transition-colors duration-500 group-hover:text-white/45">
+                    {project.shortDesc}
+                  </p>
+                  {project.honestScopeNote && (
+                    <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.1em] text-white/15 italic">
+                      {project.honestScopeNote}
+                    </p>
+                  )}
+                </div>
+
+                {/* Arrow */}
+                <ArrowUpRight className="hidden size-5 text-white/15 transition-all duration-300 group-hover:text-white/50 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 md:block" />
+              </Link>
+            </motion.div>
           ))}
+          <div className="border-t border-white/[0.06]" />
         </div>
       </div>
     </div>
@@ -130,7 +115,13 @@ function WorkContent() {
 
 export default function WorkPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#050505] text-white pt-32 text-center font-mono">Loading Work Index...</div>}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#050505] text-white pt-32 text-center font-mono text-xs text-white/30">
+          Loading...
+        </div>
+      }
+    >
       <WorkContent />
     </Suspense>
   );

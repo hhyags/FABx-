@@ -1,57 +1,104 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Cpu, Database, Cloud, Code2 } from "lucide-react";
-import { revealUp } from "@/lib/animation/motion";
+import { Server, ShieldCheck, Database, Cloud, Cpu, HardDrive, BarChart3, Activity } from "lucide-react";
+import { useEffect, useState } from "react";
+import { revealUp, fadeIn, staggerContainer } from "@/lib/animation/motion";
 
-const capabilities = [
-  { icon: Cpu, title: "Autonomous AI Agents", desc: "Multi-agent workflows operating with contextual memory." },
-  { icon: Database, title: "High-Throughput Data", desc: "Distributed vector storage with sub-millisecond retrieval." },
-  { icon: Cloud, title: "Serverless Mesh", desc: "Global edge deployment auto-scaling across regions." },
-  { icon: Code2, title: "Modern API Architecture", desc: "GraphQL & gRPC microservices built for scalability." },
+const osServices = [
+  { id: "api", icon: Server, title: "API Gateway", status: "200 OK", load: "1.2k req/s", delay: 0 },
+  { id: "auth", icon: ShieldCheck, title: "Authentication", status: "OAuth2 Validated", load: "Sub-ms", delay: 0.1 },
+  { id: "ai", icon: Cpu, title: "AI Engine", status: "LLM Active", load: "Tensor Core 98%", delay: 0.2 },
+  { id: "db", icon: Database, title: "Database", status: "Qdrant + Postgres", statusColor: "text-emerald-400", load: "12.4M records", delay: 0.3 },
+  { id: "cloud", icon: Cloud, title: "Cloud Mesh", status: "K8s Multi-Region", load: "99.99% Uptime", delay: 0.4 },
+  { id: "storage", icon: HardDrive, title: "Storage", status: "Distributed S3", load: "AES-256 Encrypted", delay: 0.5 },
+  { id: "analytics", icon: BarChart3, title: "Analytics", status: "Realtime Pipeline", load: "Kafka Streaming", delay: 0.6 },
 ];
 
 export function EngineeringOverlay() {
+  const [pulseIdx, setPulseIdx] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPulseIdx((prev) => (prev + 1) % osServices.length);
+    }, 1500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <section id="engineering" className="relative min-h-screen flex items-center justify-center px-6 py-24">
-      <div className="max-w-6xl mx-auto z-10 w-full">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.p
-            variants={revealUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.3 }}
-            className="font-mono text-xs uppercase tracking-[0.3em] text-cyan-400 mb-3"
-          >
-            Scene 04 — Engineering
+    <section
+      id="engineering"
+      className="relative flex min-h-screen items-center px-6 py-40 md:px-12 md:py-52"
+    >
+      <div className="container-editorial relative z-10 w-full space-y-16">
+        <motion.div
+          className="max-w-3xl"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3 }}
+        >
+          <motion.p variants={fadeIn} className="text-overline mb-4 text-[hsl(192,82%,46%)] font-mono">
+            CHAPTER 02 — OS SYSTEM ARCHITECTURE
           </motion.p>
-          <motion.h2
-            variants={revealUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.3 }}
-            className="font-display text-4xl sm:text-6xl font-semibold text-white"
-          >
+          <motion.h2 variants={revealUp} className="text-editorial text-white">
             Engineered for Scale.
           </motion.h2>
-        </div>
+          <motion.p variants={revealUp} className="mt-4 text-body-lg text-white/50 font-sans">
+            Inside the FABX Operating System: microservices communicate via low-latency event queues and automated pipeline meshes.
+          </motion.p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {capabilities.map((item, index) => (
-            <motion.div
-              key={item.title}
-              variants={revealUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false, amount: 0.3 }}
-              transition={{ delay: index * 0.1 }}
-              className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md hover:border-white/20 transition-colors"
-            >
-              <item.icon className="size-8 text-brand-cyan mb-4" />
-              <h3 className="font-display text-lg font-semibold text-white mb-2">{item.title}</h3>
-              <p className="text-sm text-white/60 leading-relaxed">{item.desc}</p>
-            </motion.div>
-          ))}
+        {/* Floating OS Service Windows Grid */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {osServices.map((service, idx) => {
+            const Icon = service.icon;
+            const isPulsing = pulseIdx === idx;
+            return (
+              <motion.div
+                key={service.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ delay: service.delay, duration: 0.6 }}
+                className={`relative overflow-hidden rounded-2xl border p-5 backdrop-blur-2xl transition-all duration-500 ${
+                  isPulsing
+                    ? "border-[hsl(192,82%,46%)] bg-[#0d1520]/90 shadow-[0_0_30px_rgba(23,176,204,0.25)]"
+                    : "border-white/10 bg-[#0a0b0e]/80 hover:border-white/20"
+                }`}
+              >
+                {/* Header */}
+                <div className="flex items-center justify-between border-b border-white/10 pb-3 font-mono text-xs">
+                  <div className="flex items-center gap-2 text-white font-bold">
+                    <Icon className={`size-4 ${isPulsing ? "text-[hsl(192,82%,46%)]" : "text-white/60"}`} />
+                    <span>{service.title}</span>
+                  </div>
+                  <span className={`size-2 rounded-full ${isPulsing ? "bg-[hsl(192,82%,46%)] animate-ping" : "bg-emerald-400"}`} />
+                </div>
+
+                {/* Body Details */}
+                <div className="mt-4 space-y-2 font-mono text-xs">
+                  <div className="flex items-center justify-between text-white/50 text-[11px]">
+                    <span>STATUS</span>
+                    <span className="text-white font-semibold">{service.status}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-white/50 text-[11px]">
+                    <span>THROUGHPUT</span>
+                    <span className="text-emerald-400 font-mono">{service.load}</span>
+                  </div>
+                </div>
+
+                {/* Data Pulse Bar */}
+                <div className="mt-4 pt-2 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-white/30">
+                  <span>IPC CHANNEL</span>
+                  <span className="flex items-center gap-1">
+                    <Activity className="size-3 text-[hsl(192,82%,46%)]" />
+                    <span>ACTIVE</span>
+                  </span>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -1,94 +1,94 @@
 {
   "scenes": {
-    "hero": {
-      "id": "hero",
-      "range": [0.0, 0.12],
+    "arrival": {
+      "id": "arrival",
+      "range": [0.0, 0.10],
       "camera": {
-        "position": [0, 0.5, 8.2],
-        "target": [0, 0.35, 0],
+        "position": [0, 0.3, 8.0],
+        "target": [0, 0.2, 0],
         "fov": 34
       },
       "lighting": "studio"
     },
-    "birth": {
-      "id": "birth",
-      "range": [0.12, 0.25],
+    "spark": {
+      "id": "spark",
+      "range": [0.10, 0.18],
       "camera": {
-        "position": [0, 0.2, 5.5],
+        "position": [0, 0.1, 5.0],
         "target": [0, 0, 0],
         "fov": 38
       },
-      "lighting": "purple"
+      "lighting": "minimal"
     },
-    "network": {
-      "id": "network",
-      "range": [0.25, 0.4],
+    "intelligence": {
+      "id": "intelligence",
+      "range": [0.18, 0.30],
       "camera": {
-        "position": [0, 0, 10.0],
+        "position": [0, 0, 4.2],
         "target": [0, 0, 0],
-        "fov": 42
+        "fov": 44
       },
-      "lighting": "blue"
+      "lighting": "cool"
     },
     "engineering": {
       "id": "engineering",
-      "range": [0.4, 0.55],
+      "range": [0.30, 0.45],
       "camera": {
-        "position": [-2, 1, 7.5],
+        "position": [-1.8, 0.8, 6.5],
         "target": [0, 0, 0],
         "fov": 36
       },
-      "lighting": "white"
+      "lighting": "neutral"
     },
-    "products": {
-      "id": "products",
-      "range": [0.55, 0.7],
+    "product_creation": {
+      "id": "product_creation",
+      "range": [0.45, 0.60],
       "camera": {
-        "position": [0, 1.2, 9.0],
+        "position": [0, 1.0, 7.5],
+        "target": [0, 0, 0],
+        "fov": 36
+      },
+      "lighting": "studio"
+    },
+    "case_studies": {
+      "id": "case_studies",
+      "range": [0.60, 0.70],
+      "camera": {
+        "position": [0, 0.5, 7.0],
         "target": [0, 0, 0],
         "fov": 35
       },
-      "lighting": "warm"
-    },
-    "impact": {
-      "id": "impact",
-      "range": [0.7, 0.8],
-      "camera": {
-        "position": [0, 0.8, 6.8],
-        "target": [0, 0, 0],
-        "fov": 38
-      },
-      "lighting": "gold"
+      "lighting": "studio"
     },
     "process": {
       "id": "process",
-      "range": [0.8, 0.88],
+      "range": [0.70, 0.80],
       "camera": {
-        "position": [1.5, 0.5, 8.0],
-        "target": [0, 0, 0],
+        "position": [0, -1.0, 8.0],
+        "target": [0, -1.0, 0],
         "fov": 36
       },
-      "lighting": "cyan"
+      "lighting": "cool"
     },
-    "values": {
-      "id": "values",
-      "range": [0.88, 0.94],
+    "trust": {
+      "id": "trust",
+      "range": [0.80, 0.88],
       "camera": {
-        "position": [0, 0.4, 7.0],
+        "position": [0, 0, 8.5],
         "target": [0, 0, 0],
-        "fov": 34
+        "fov": 32
       },
-      "lighting": "purple"
+      "lighting": "minimal"
     },
     "contact": {
       "id": "contact",
-      "range": [0.94, 1.0],
+      "range": [0.88, 1.0],
       "camera": {
-        "position": [0, 0.5, 8.2],
-        "target": [0, 0.35, 0],
+        "position": [0, 0.4, 8.2],
+        "target": [0, 0.2, 0],
         "fov": 34
       },
-      "lighting": "minimal"
+      "lighting": "studio"
     }
   }
 }

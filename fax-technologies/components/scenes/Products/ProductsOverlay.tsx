@@ -1,171 +1,217 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Sparkles, X } from "lucide-react";
+import { AppWindow, ExternalLink, X, Play, Activity, Cpu, Layers } from "lucide-react";
 import { useState } from "react";
-import { FramerCard } from "@/components/ui/framer-card";
-import { revealUp } from "@/lib/animation/motion";
+import Link from "next/link";
+import { revealUp, fadeIn, staggerContainer } from "@/lib/animation/motion";
 
-const categories = ["All Showcase", "AI Agents", "Enterprise Platforms", "Mobile Apps"];
-
-const showcaseItems = [
+const osApps = [
   {
-    id: "crm",
-    category: "AI Agents",
-    title: "Autonomous Sales Agent CRM",
-    client: "FabX Labs",
-    year: "2026",
-    tint: "rgba(139,92,246,0.08)",
-    desc: "AI-driven CRM system with automated lead intelligence, voice calling agents, and automated pipeline sync.",
-    deliverables: ["RAG Architecture", "Real-Time Telemetry", "Next.js & WebGL UI"],
+    id: "hrflow",
+    appId: "APP-01",
+    title: "HRFlow AI",
+    category: "AI Product OS",
+    image: "/images/projects/hrflow-ai.png",
+    demoUrl: "/work/hrflow-ai",
+    status: "SYSTEM READY",
+    desc: "Intelligent human resources OS platform powered by AI — automating candidate screening, workflow scheduling, and resume matching.",
+    metrics: { cpu: "14%", memory: "1.2 GB", latency: "28ms" },
+    deliverables: ["AI Screening", "Workflow Engine", "Resume Vector Matching"],
   },
   {
-    id: "erp",
-    category: "Enterprise Platforms",
-    title: "Global Supply Chain ERP",
-    client: "Nexus Global",
-    year: "2026",
-    tint: "rgba(34,211,238,0.08)",
-    desc: "Real-time ledger reconciliation, predictive inventory management, and multi-region cloud edge synchronization.",
-    deliverables: ["Serverless Mesh", "Vector Search", "High-Throughput APIs"],
+    id: "medflow",
+    appId: "APP-02",
+    title: "MedFlow AI",
+    category: "Healthcare OS",
+    image: "/images/projects/medflow-ai.png",
+    demoUrl: "/work/medflow-ai",
+    status: "SYSTEM READY",
+    desc: "AI-driven healthcare telemetry system streamlining patient vital workflows, appointment scheduling, and clinical decision support.",
+    metrics: { cpu: "22%", memory: "2.4 GB", latency: "18ms" },
+    deliverables: ["Patient Telemetry", "Clinical AI", "HIPAA Architecture"],
   },
   {
-    id: "studio",
-    category: "AI Agents",
-    title: "AI Agent Orchestration Studio",
-    client: "Vanguard Tech",
-    year: "2026",
-    tint: "rgba(245,158,11,0.08)",
-    desc: "Visual node-based agent workflow builder allowing enterprises to deploy multi-agent autonomous teams in minutes.",
-    deliverables: ["Visual Canvas", "Sub-10ms Latency", "Multi-LLM Routing"],
+    id: "kirana",
+    appId: "APP-03",
+    title: "Kirana AI",
+    category: "Retail Intelligence OS",
+    image: "/images/projects/kirana-ai.png",
+    demoUrl: "/work/godowniq",
+    status: "SYSTEM READY",
+    desc: "Intelligent inventory and demand forecasting platform built for retail businesses — bringing predictive AI to commerce.",
+    metrics: { cpu: "18%", memory: "1.8 GB", latency: "34ms" },
+    deliverables: ["Demand Prediction", "Sales Analytics", "Automated Restock"],
+  },
+  {
+    id: "kgn",
+    appId: "APP-04",
+    title: "KGN Service",
+    category: "Enterprise OS",
+    image: "/images/projects/kgn-service.png",
+    demoUrl: "/work/kgn-enterprise",
+    status: "SYSTEM READY",
+    desc: "Enterprise service management OS engineered for operational efficiency, CRM automation, and service delivery tracking.",
+    metrics: { cpu: "12%", memory: "3.1 GB", latency: "22ms" },
+    deliverables: ["CRM Automation", "Service Dispatch", "Realtime Analytics"],
   },
 ];
 
 export function ProductsOverlay() {
-  const [activeCategory, setActiveCategory] = useState("All Showcase");
-  const [selectedItem, setSelectedItem] = useState<(typeof showcaseItems)[0] | null>(null);
-
-  const filteredItems = showcaseItems.filter(
-    (item) => activeCategory === "All Showcase" || item.category === activeCategory
-  );
+  const [activeApp, setActiveApp] = useState<(typeof osApps)[0] | null>(null);
 
   return (
-    <section id="products" className="relative min-h-screen flex items-center justify-center px-6 py-28">
-      <div className="max-w-6xl mx-auto z-10 w-full">
+    <section
+      id="products"
+      className="relative flex min-h-screen items-center px-6 py-40 md:px-12 md:py-52"
+    >
+      <div className="container-editorial relative z-10 w-full space-y-16">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div>
+        <motion.div
+          className="max-w-3xl"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3 }}
+        >
+          <motion.p variants={fadeIn} className="text-overline mb-4 text-[hsl(192,82%,46%)] font-mono">
+            CHAPTER 04 — FABX SOFTWARE APPLICATIONS
+          </motion.p>
+          <motion.h2 variants={revealUp} className="text-editorial text-white">
+            Software Products Engine.
+          </motion.h2>
+          <motion.p variants={revealUp} className="mt-4 text-body-lg text-white/50 font-sans">
+            Launch live software applications built by FABX Innovations inside the system environment.
+          </motion.p>
+        </motion.div>
+
+        {/* Application Icons Launcher Grid */}
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {osApps.map((app, idx) => (
             <motion.div
-              variants={revealUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false, amount: 0.3 }}
-              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-cyan-400 mb-3 px-4 py-1.5 rounded-full border border-cyan-400/20 bg-cyan-950/20 backdrop-blur-md"
+              key={app.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ delay: idx * 0.1, duration: 0.6 }}
+              onClick={() => setActiveApp(app)}
+              className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-[#0b0c10]/90 p-6 backdrop-blur-2xl transition-all duration-500 hover:border-[hsl(192,82%,46%)] hover:shadow-[0_0_40px_rgba(23,176,204,0.2)]"
             >
-              <Sparkles className="size-3.5" /> Framer-Powered Digital Showcase
-            </motion.div>
-            <motion.h2
-              variants={revealUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false, amount: 0.3 }}
-              className="font-display text-4xl sm:text-7xl font-semibold text-white leading-tight"
-            >
-              Selected <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple via-cyan-400 to-white">Works.</span>
-            </motion.h2>
-          </div>
-
-          {/* Interactive Category Filter Pills */}
-          <div className="flex flex-wrap gap-2">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-5 py-2 rounded-full font-mono text-xs tracking-wider transition-all ${
-                  activeCategory === cat
-                    ? "bg-white text-black font-semibold shadow-[0_0_25px_rgba(255,255,255,0.4)]"
-                    : "border border-white/10 bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Framer-Motion Animated Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {filteredItems.map((item, idx) => (
-            <FramerCard
-              key={item.id}
-              tint={item.tint}
-              hoverRotate={idx % 2 === 0 ? 1.5 : -1.5}
-              hoverScale={1.04}
-              onClick={() => setSelectedItem(item)}
-              className="cursor-pointer group"
-            >
-              <div className="flex items-center justify-between text-xs font-mono text-cyan-400 mb-4">
-                <span>{item.category}</span>
-                <span>{item.year}</span>
+              {/* Top OS App Bar */}
+              <div className="flex items-center justify-between font-mono text-[10px] text-white/40 mb-4">
+                <span>{app.appId}</span>
+                <span className="text-emerald-400 flex items-center gap-1">
+                  <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  {app.status}
+                </span>
               </div>
-              <h3 className="font-display text-2xl font-semibold text-white mb-3 flex items-center justify-between">
-                {item.title}
-                <ArrowUpRight className="size-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 text-cyan-400" />
-              </h3>
-              <p className="text-sm text-white/70 leading-relaxed mb-6">{item.desc}</p>
-              <div className="flex flex-wrap gap-2">
-                {item.deliverables.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 rounded-full border border-white/10 bg-white/5 font-mono text-[10px] text-white/50"
-                  >
-                    {tag}
+
+              {/* App Thumbnail Window */}
+              <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-white/5 border border-white/10">
+                <img
+                  src={app.image}
+                  alt={app.title}
+                  className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-black/40 backdrop-blur-sm">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 font-mono text-xs font-bold text-black">
+                    <Play className="size-3 fill-black" />
+                    BOOT APPLICATION
                   </span>
-                ))}
+                </div>
               </div>
-            </FramerCard>
+
+              {/* App Info */}
+              <div className="mt-5 space-y-2">
+                <div className="font-mono text-[10px] uppercase text-[hsl(192,82%,46%)]">
+                  {app.category}
+                </div>
+                <h3 className="font-display text-xl font-bold text-white group-hover:text-[hsl(192,82%,46%)] transition-colors">
+                  {app.title}
+                </h3>
+                <p className="font-sans text-xs text-white/40 line-clamp-2 leading-relaxed">
+                  {app.desc}
+                </p>
+              </div>
+
+              {/* App Metrics Footer */}
+              <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between font-mono text-[10px] text-white/30">
+                <span>LATENCY: {app.metrics.latency}</span>
+                <span>MEM: {app.metrics.memory}</span>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Case Study Modal */}
+      {/* FABX OS Window Boot Modal */}
       <AnimatePresence>
-        {selectedItem && (
+        {activeApp && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/80 backdrop-blur-2xl"
-            onClick={() => setSelectedItem(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-6 backdrop-blur-2xl"
+            onClick={() => setActiveApp(null)}
           >
             <motion.div
-              initial={{ scale: 0.9, y: 20 }}
+              initial={{ scale: 0.95, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
+              exit={{ scale: 0.95, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-3xl rounded-3xl border border-white/20 bg-black/90 p-10 text-white shadow-[0_0_80px_rgba(139,92,246,0.3)]"
+              className="relative w-full max-w-4xl overflow-hidden rounded-2xl border border-white/15 bg-[#0a0b0e] p-6 md:p-8 font-mono shadow-2xl"
             >
-              <button
-                onClick={() => setSelectedItem(null)}
-                className="absolute right-6 top-6 p-2 rounded-full border border-white/20 bg-white/10 hover:bg-white/20"
-              >
-                <X className="size-5" />
-              </button>
-
-              <div className="font-mono text-xs text-cyan-400 uppercase tracking-widest mb-2">
-                {selectedItem.category} • {selectedItem.client}
-              </div>
-              <h3 className="font-display text-4xl font-bold mb-4">{selectedItem.title}</h3>
-              <p className="text-base text-white/70 leading-relaxed mb-8">{selectedItem.desc}</p>
-
-              <div className="border-t border-white/10 pt-6 flex flex-wrap justify-between items-center text-sm">
-                <span className="font-mono text-white/50">Engine Architecture: WebGL / R3F / Sub-10ms APIs</span>
+              {/* Window Title Bar */}
+              <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+                <div className="flex items-center gap-3">
+                  <span className="size-3 rounded-full bg-rose-500/80 cursor-pointer" onClick={() => setActiveApp(null)} />
+                  <span className="size-3 rounded-full bg-amber-500/80" />
+                  <span className="size-3 rounded-full bg-emerald-500/80" />
+                  <span className="ml-3 font-bold text-white text-sm">{activeApp.title} — FABX OS Runtime</span>
+                </div>
                 <button
-                  onClick={() => setSelectedItem(null)}
-                  className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-white/90"
+                  onClick={() => setActiveApp(null)}
+                  className="text-white/40 hover:text-white transition-colors"
                 >
-                  Close Preview
+                  <X className="size-5" />
                 </button>
+              </div>
+
+              {/* Window Image Preview */}
+              <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5 mb-6">
+                <img
+                  src={activeApp.image}
+                  alt={activeApp.title}
+                  className="h-full w-full object-cover object-top"
+                />
+              </div>
+
+              {/* App Description & Deliverables */}
+              <div className="space-y-4">
+                <div className="text-xs text-[hsl(192,82%,46%)]">{activeApp.category} • STATUS: ONLINE</div>
+                <h3 className="font-display text-2xl font-bold text-white">{activeApp.title}</h3>
+                <p className="font-sans text-sm text-white/60 leading-relaxed">{activeApp.desc}</p>
+
+                <div className="pt-2 flex flex-wrap gap-2">
+                  {activeApp.deliverables.map((tag) => (
+                    <span key={tag} className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] text-white/50">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Window Action Bar */}
+              <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+                <Link
+                  href={activeApp.demoUrl}
+                  className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-sans text-xs font-bold text-black hover:bg-white/90 transition-all"
+                >
+                  <span>Launch Live Case Study</span>
+                  <ExternalLink className="size-3.5" />
+                </Link>
+                <span className="text-xs text-emerald-400">EXECUTION TIME: {activeApp.metrics.latency}</span>
               </div>
             </motion.div>
           </motion.div>

@@ -1,41 +1,40 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { revealUp } from "@/lib/animation/motion";
+import { revealUp, fadeIn, staggerContainer } from "@/lib/animation/motion";
 
 export function BirthOverlay() {
   return (
-    <section id="birth" className="relative min-h-screen flex items-center justify-center text-center px-6 py-24">
-      <div className="max-w-4xl mx-auto z-10">
-        <motion.p
-          variants={revealUp}
+    <section
+      id="birth"
+      className="relative flex min-h-screen items-center justify-center px-6 py-40 text-center md:px-12 md:py-52"
+    >
+      <div className="container-editorial relative z-10 max-w-3xl">
+        <motion.div
+          variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: false, amount: 0.4 }}
-          className="font-mono text-xs uppercase tracking-[0.3em] text-brand-cyan mb-4"
+          className="space-y-6"
         >
-          Scene 02 — Birth of Intelligence
-        </motion.p>
+          <motion.p variants={fadeIn} className="text-overline">
+            Chapter 02 — The Spark
+          </motion.p>
 
-        <motion.h2
-          variants={revealUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: false, amount: 0.4 }}
-          className="font-display text-4xl sm:text-6xl lg:text-7xl font-semibold text-white leading-[1.05]"
-        >
-          Every breakthrough begins with <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple via-cyan-400 to-white">one idea.</span>
-        </motion.h2>
+          <motion.h2
+            variants={revealUp}
+            className="font-display text-[clamp(2.2rem,4.5vw,4.2rem)] font-semibold tracking-tight text-white leading-tight"
+          >
+            Every breakthrough begins with one idea.
+          </motion.h2>
 
-        <motion.p
-          variants={revealUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: false, amount: 0.4 }}
-          className="mt-6 text-lg text-white/70 max-w-2xl mx-auto leading-relaxed"
-        >
-          Raw potential collapses into singular vision. Watch as isolated concepts converge, ignite, and transform into active digital intelligence.
-        </motion.p>
+          <motion.p
+            variants={revealUp}
+            className="mx-auto max-w-reading text-body-lg text-white/40"
+          >
+            A single spark of intent — condensed into code, architecture, and purpose.
+          </motion.p>
+        </motion.div>
       </div>
     </section>
   );

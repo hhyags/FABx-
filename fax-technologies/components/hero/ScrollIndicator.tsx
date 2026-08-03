@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
 
 type ScrollIndicatorProps = {
   reducedMotion: boolean;
@@ -9,15 +8,19 @@ type ScrollIndicatorProps = {
 
 export function ScrollIndicator({ reducedMotion }: ScrollIndicatorProps) {
   return (
-    <div className="absolute bottom-6 left-1/2 z-20 hidden -translate-x-1/2 flex-col items-center gap-3 text-white/55 sm:flex">
-      <span className="font-mono text-[10px] uppercase tracking-[0.26em]">Scroll</span>
-      <motion.div
-        className="grid size-9 place-items-center rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-md"
-        animate={reducedMotion ? undefined : { y: [0, 7, 0] }}
-        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <ChevronDown className="size-4" />
-      </motion.div>
+    <div className="absolute bottom-8 left-1/2 z-20 hidden -translate-x-1/2 flex-col items-center gap-3 sm:flex">
+      {/* Mouse Icon Capsule */}
+      <div className="relative flex h-10 w-6 justify-center rounded-full border border-white/30 p-1.5 backdrop-blur-sm transition-colors hover:border-white/60">
+        <motion.div
+          className="size-1 rounded-full bg-white"
+          animate={reducedMotion ? undefined : { y: [0, 14, 0], opacity: [1, 0.2, 1] }}
+          transition={{
+            duration: 1.8,
+            repeat: Infinity,
+            ease: [0.45, 0, 0.55, 1],
+          }}
+        />
+      </div>
     </div>
   );
 }
