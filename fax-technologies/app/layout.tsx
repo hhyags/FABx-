@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { inter, jetBrainsMono, spaceGrotesk } from "@/app/fonts";
-import { GlobalCanvas } from "@/components/experience/GlobalCanvas";
 import { Footer } from "@/components/layout/footer";
 import { Navigation } from "@/components/layout/navigation";
 import { Providers } from "@/components/providers/providers";
@@ -51,11 +50,8 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetBrainsMono.variable}`}
     >
-      <body className="bg-[#050505] text-white selection:bg-[hsl(192,82%,46%,0.3)] selection:text-white">
+      <body className="bg-black text-white selection:bg-[hsl(192,82%,46%,0.3)] selection:text-white">
         <Providers>
-          {/* Site-wide WebGL 3D Canvas Layer with 3D FABX logo */}
-          <GlobalCanvas />
-
           <div className="relative z-10 flex min-h-screen flex-col">
             <Navigation />
             <main className="flex-1">{children}</main>

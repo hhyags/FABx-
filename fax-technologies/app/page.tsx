@@ -1,5 +1,5 @@
-import { ExperienceEngine } from "@/components/experience/ExperienceEngine";
+import { CinematicExperienceClient } from "@/components/canvas/CinematicExperienceClient";
 
 export default function HomePage() {
-  return <ExperienceEngine />;
+  return <CinematicExperienceClient />;
 }

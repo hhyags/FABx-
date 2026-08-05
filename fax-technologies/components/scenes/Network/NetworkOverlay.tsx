@@ -9,8 +9,8 @@ export function NetworkOverlay() {
   const [hoveredNode, setHoveredNode] = useState<{ id: string; label: string; category: string } | null>(null);
 
   useEffect(() => {
-    const unsub = eventBus.on(ENGINE_EVENTS.NODE_HOVER, (data: any) => {
-      setHoveredNode(data);
+    const unsub = eventBus.on(ENGINE_EVENTS.NODE_HOVER, (data: unknown) => {
+      setHoveredNode(data as { id: string; label: string; category: string } | null);
     });
     return () => unsub();
   }, []);

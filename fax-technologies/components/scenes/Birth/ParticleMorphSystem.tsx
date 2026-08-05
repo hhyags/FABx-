@@ -2,7 +2,7 @@
 
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
-import { AdditiveBlending, BufferAttribute, BufferGeometry, MathUtils, Points } from "three";
+import { AdditiveBlending, BufferAttribute, BufferGeometry, MathUtils, Points, PointsMaterial } from "three";
 import { TimelineController } from "@/lib/experience/engine/TimelineController";
 
 type ParticleMorphSystemProps = {
@@ -11,17 +11,6 @@ type ParticleMorphSystemProps = {
 
 const PARTICLE_COUNT = 1800;
 
-/**
- * Particles morph between chapter targets:
- * - Ch01 Arrival: Clustered around the logo position (right side)
- * - Ch02 Spark: All collapse into one central spark
- * - Ch03 Intelligence: Expand into neural network constellation
- * - Ch04 Engineering: Form an architectural grid
- * - Ch05-06 Products: Scatter as ambient atmosphere
- * - Ch07 Process: Gentle vertical flow
- * - Ch08 Trust: Fade to ZERO opacity (pure whitespace)
- * - Ch09 Contact: Reform around logo position
- */
 export function ParticleMorphSystem({ reducedMotion }: ParticleMorphSystemProps) {
   const pointsRef = useRef<Points>(null);
 
@@ -145,7 +134,7 @@ export function ParticleMorphSystem({ reducedMotion }: ParticleMorphSystemProps)
     positionAttr.needsUpdate = true;
 
     // Material opacity
-    const material = pointsRef.current.material as any;
+    const material = pointsRef.current.material as PointsMaterial;
     material.opacity = MathUtils.lerp(material.opacity, opacityTarget, 0.06);
 
     // Very gentle rotation — ambient, not distracting

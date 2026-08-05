@@ -2,7 +2,7 @@
 
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef, useState } from "react";
-import { BufferGeometry, Float32BufferAttribute, Group, LineSegments, MathUtils, Vector3 } from "three";
+import { BufferGeometry, Float32BufferAttribute, Group, LineBasicMaterial, LineSegments, MathUtils, Vector3 } from "three";
 import { ENGINE_EVENTS, eventBus } from "@/lib/experience/engine/EventBus";
 import { TimelineController } from "@/lib/experience/engine/TimelineController";
 
@@ -76,7 +76,7 @@ export function NeuralNetwork3D() {
 
     // Update line material opacity
     if (linesRef.current) {
-      const mat = linesRef.current.material as any;
+      const mat = linesRef.current.material as LineBasicMaterial;
       mat.opacity = opacity * 0.25;
     }
 
