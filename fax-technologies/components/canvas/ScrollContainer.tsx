@@ -22,7 +22,7 @@ export function ScrollContainer() {
       trigger: containerRef.current,
       start: "top top",
       end: "bottom bottom",
-      scrub: 1.2, // Ultra-smooth 1.2s inertia lag for cinematic motion
+      scrub: 0.5, // Responsive 0.5s inertia lag
       onUpdate: (self) => {
         setProgress(self.progress);
       },
