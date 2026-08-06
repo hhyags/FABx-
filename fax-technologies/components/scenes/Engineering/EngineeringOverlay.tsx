@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { Server, ShieldCheck, Database, Cloud, Cpu, HardDrive, BarChart3, Activity } from "lucide-react";
 import { useEffect, useState } from "react";
 import { revealUp, fadeIn, staggerContainer } from "@/lib/animation/motion";
+import { AnimeTextReveal } from "@/components/ui/AnimeTextReveal";
+import { AnimeCardHover } from "@/components/ui/AnimeCardHover";
 
 const osServices = [
   { id: "api", icon: Server, title: "API Gateway", status: "200 OK", load: "1.2k req/s", delay: 0 },
@@ -41,9 +43,14 @@ export function EngineeringOverlay() {
           <motion.p variants={fadeIn} className="text-overline mb-4 text-[hsl(192,82%,46%)] font-mono">
             CHAPTER 02 — OS SYSTEM ARCHITECTURE
           </motion.p>
-          <motion.h2 variants={revealUp} className="text-editorial text-white">
-            Engineered for Scale.
-          </motion.h2>
+
+          <AnimeTextReveal
+            text="Engineered for Scale."
+            className="text-editorial text-white font-bold"
+            as="h2"
+            delay={100}
+          />
+
           <motion.p variants={revealUp} className="mt-4 text-body-lg text-white/50 font-sans">
             Inside the FABX Operating System: microservices communicate via low-latency event queues and automated pipeline meshes.
           </motion.p>
@@ -61,41 +68,44 @@ export function EngineeringOverlay() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: false, amount: 0.2 }}
                 transition={{ delay: service.delay, duration: 0.6 }}
-                className={`relative overflow-hidden rounded-2xl border p-5 backdrop-blur-2xl transition-all duration-500 ${
-                  isPulsing
-                    ? "border-[hsl(192,82%,46%)] bg-[#0d1520]/90 shadow-[0_0_30px_rgba(23,176,204,0.25)]"
-                    : "border-white/10 bg-[#0a0b0e]/80 hover:border-white/20"
-                }`}
               >
-                {/* Header */}
-                <div className="flex items-center justify-between border-b border-white/10 pb-3 font-mono text-xs">
-                  <div className="flex items-center gap-2 text-white font-bold">
-                    <Icon className={`size-4 ${isPulsing ? "text-[hsl(192,82%,46%)]" : "text-white/60"}`} />
-                    <span>{service.title}</span>
+                <AnimeCardHover
+                  className={`relative overflow-hidden rounded-2xl border p-5 backdrop-blur-2xl transition-all duration-500 ${
+                    isPulsing
+                      ? "border-[hsl(192,82%,46%)] bg-[#0d1520]/90 shadow-[0_0_30px_rgba(23,176,204,0.25)]"
+                      : "border-white/10 bg-[#0a0b0e]/80 hover:border-white/20"
+                  }`}
+                >
+                  {/* Header */}
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3 font-mono text-xs">
+                    <div className="flex items-center gap-2 text-white font-bold">
+                      <Icon className={`size-4 ${isPulsing ? "text-[hsl(192,82%,46%)]" : "text-white/60"}`} />
+                      <span>{service.title}</span>
+                    </div>
+                    <span className={`size-2 rounded-full ${isPulsing ? "bg-[hsl(192,82%,46%)] animate-ping" : "bg-emerald-400"}`} />
                   </div>
-                  <span className={`size-2 rounded-full ${isPulsing ? "bg-[hsl(192,82%,46%)] animate-ping" : "bg-emerald-400"}`} />
-                </div>
 
-                {/* Body Details */}
-                <div className="mt-4 space-y-2 font-mono text-xs">
-                  <div className="flex items-center justify-between text-white/50 text-[11px]">
-                    <span>STATUS</span>
-                    <span className="text-white font-semibold">{service.status}</span>
+                  {/* Body Details */}
+                  <div className="mt-4 space-y-2 font-mono text-xs">
+                    <div className="flex items-center justify-between text-white/50 text-[11px]">
+                      <span>STATUS</span>
+                      <span className="text-white font-semibold">{service.status}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-white/50 text-[11px]">
+                      <span>THROUGHPUT</span>
+                      <span className="text-emerald-400 font-mono">{service.load}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between text-white/50 text-[11px]">
-                    <span>THROUGHPUT</span>
-                    <span className="text-emerald-400 font-mono">{service.load}</span>
-                  </div>
-                </div>
 
-                {/* Data Pulse Bar */}
-                <div className="mt-4 pt-2 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-white/30">
-                  <span>IPC CHANNEL</span>
-                  <span className="flex items-center gap-1">
-                    <Activity className="size-3 text-[hsl(192,82%,46%)]" />
-                    <span>ACTIVE</span>
-                  </span>
-                </div>
+                  {/* Data Pulse Bar */}
+                  <div className="mt-4 pt-2 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-white/30">
+                    <span>IPC CHANNEL</span>
+                    <span className="flex items-center gap-1">
+                      <Activity className="size-3 text-[hsl(192,82%,46%)]" />
+                      <span>ACTIVE</span>
+                    </span>
+                  </div>
+                </AnimeCardHover>
               </motion.div>
             );
           })}

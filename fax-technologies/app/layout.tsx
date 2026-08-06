@@ -50,12 +50,10 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetBrainsMono.variable}`}
     >
-      <body className="bg-black text-white selection:bg-[hsl(192,82%,46%,0.3)] selection:text-white">
+      <body className="bg-white text-black selection:bg-black selection:text-white">
         <Providers>
           <div className="relative z-10 flex min-h-screen flex-col">
-            <Navigation />
             <main className="flex-1">{children}</main>
-            <Footer />
           </div>
         </Providers>
       </body>

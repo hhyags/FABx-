@@ -6,6 +6,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ScrollIndicator } from "@/components/hero/ScrollIndicator";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { AnimeTextReveal } from "@/components/ui/AnimeTextReveal";
+import { AnimeTelemetryCounter } from "@/components/ui/AnimeTelemetryCounter";
+import { AnimeMagneticButton } from "@/components/ui/AnimeMagneticButton";
+import { AnimeCardHover } from "@/components/ui/AnimeCardHover";
 
 const BOOT_LOGS = [
   "Initializing FABX OS...",
@@ -102,42 +106,49 @@ export function Hero() {
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
           {/* Left Column — Core OS Headline */}
           <div className="lg:col-span-6 space-y-8">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 font-mono text-xs text-[hsl(192,82%,46%)]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 font-mono text-xs text-[hsl(192,82%,46%)] shadow-[0_0_15px_rgba(14,165,233,0.15)]">
               <Cpu className="size-3.5" />
               <span>CHAPTER 01 — AI CORE OPERATING SYSTEM</span>
             </div>
 
-            <h1 className="font-display text-[clamp(2.8rem,5.5vw,5.2rem)] font-bold leading-[1.04] tracking-tight text-white">
-              Engineering <br />
-              Intelligent <br />
-              <span className="text-[hsl(192,82%,46%)]">Digital Products.</span>
-            </h1>
+            <div className="space-y-2">
+              <AnimeTextReveal
+                text="Engineering Intelligent Digital Products."
+                className="font-display text-[clamp(2.8rem,5.5vw,5.2rem)] font-bold leading-[1.04] tracking-tight text-white"
+                as="h1"
+                delay={150}
+                staggerSpeed={50}
+              />
+            </div>
 
-            <p className="max-w-md text-base leading-[1.75] text-white/50 font-sans">
+            <p className="max-w-md text-base leading-[1.75] text-white/60 font-sans">
               We design, architect, and deploy custom AI agents, complex enterprise software,
               and automated digital products inside a unified cloud operating system.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4">
-              <Link
+              <AnimeMagneticButton
                 href="#contact"
-                className="group inline-flex items-center gap-2.5 rounded-full bg-white px-7 py-3.5 font-display text-sm font-semibold text-black transition-all hover:bg-white/90"
+                className="group rounded-full bg-white px-7 py-3.5 font-display text-sm font-semibold text-black shadow-lg shadow-white/10 hover:bg-white/90"
               >
-                <span>Deploy Project</span>
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-              <Link
+                <span className="flex items-center gap-2.5">
+                  <span>Deploy Project</span>
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </AnimeMagneticButton>
+
+              <AnimeMagneticButton
                 href="#engineering"
-                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-6 py-3.5 font-mono text-xs text-white/70 transition-all hover:border-white/30 hover:text-white"
+                className="rounded-full border border-white/15 bg-white/[0.04] px-6 py-3.5 font-mono text-xs text-white/70 hover:border-white/30 hover:text-white"
               >
                 <span>Inspect Architecture →</span>
-              </Link>
+              </AnimeMagneticButton>
             </div>
           </div>
 
           {/* Right Column — Live AI Core System Telemetry Dashboard */}
           <div className="lg:col-span-6 space-y-4">
-            <div className="rounded-2xl border border-white/10 bg-[#0c0d10]/85 p-6 backdrop-blur-2xl space-y-6 shadow-2xl">
+            <AnimeCardHover className="rounded-2xl border border-white/10 bg-[#0c0d10]/85 p-6 backdrop-blur-2xl space-y-6 shadow-2xl">
               <div className="flex items-center justify-between border-b border-white/10 pb-4 font-mono text-xs">
                 <span className="flex items-center gap-2 text-white/80 font-bold">
                   <Activity className="size-4 text-[hsl(192,82%,46%)] animate-pulse" />
@@ -148,27 +159,39 @@ export function Hero() {
                 </span>
               </div>
 
-              {/* Metrics Grid */}
+              {/* Metrics Grid with AnimeTelemetryCounter */}
               <div className="grid grid-cols-3 gap-3 font-mono">
                 <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3 space-y-1">
                   <div className="text-[10px] text-white/40 uppercase">CPU LOAD</div>
-                  <div className="text-xl font-bold text-white">{cpuLoad}%</div>
+                  <div className="text-xl font-bold text-white">
+                    <AnimeTelemetryCounter value={cpuLoad} suffix="%" />
+                  </div>
                   <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
-                    <div className="h-full bg-[hsl(192,82%,46%)] transition-all duration-500" style={{ width: `${cpuLoad}%` }} />
+                    <div
+                      className="h-full bg-[hsl(192,82%,46%)] transition-all duration-500"
+                      style={{ width: `${cpuLoad}%` }}
+                    />
                   </div>
                 </div>
 
                 <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3 space-y-1">
                   <div className="text-[10px] text-white/40 uppercase">MEMORY</div>
-                  <div className="text-xl font-bold text-white">{memoryUsage} GB</div>
+                  <div className="text-xl font-bold text-white">
+                    <AnimeTelemetryCounter value={memoryUsage} decimals={1} suffix=" GB" />
+                  </div>
                   <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
-                    <div className="h-full bg-emerald-400 transition-all duration-500" style={{ width: `${(memoryUsage / 8) * 100}%` }} />
+                    <div
+                      className="h-full bg-emerald-400 transition-all duration-500"
+                      style={{ width: `${(memoryUsage / 8) * 100}%` }}
+                    />
                   </div>
                 </div>
 
                 <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3 space-y-1">
                   <div className="text-[10px] text-white/40 uppercase">LATENCY</div>
-                  <div className="text-xl font-bold text-emerald-400">42 ms</div>
+                  <div className="text-xl font-bold text-emerald-400">
+                    <AnimeTelemetryCounter value={42} suffix=" ms" />
+                  </div>
                   <div className="text-[9px] text-white/30">SUB-50MS EDGE</div>
                 </div>
               </div>
@@ -190,7 +213,7 @@ export function Hero() {
                   Parsing incoming dataset • Vector embeddings generated • Automated pipeline trigger completed.
                 </div>
               </div>
-            </div>
+            </AnimeCardHover>
           </div>
         </div>
       </div>

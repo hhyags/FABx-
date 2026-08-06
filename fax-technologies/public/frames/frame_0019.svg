@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070c18"/>
+      <stop offset="50%" stop-color="#0f1930"/>
+      <stop offset="100%" stop-color="#040810"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Clean Background -->
+  <rect width="1280" height="720" fill="url(#bgGrad)"/>
+
+  <!-- High-Tech Cyber Grid -->
+  <g stroke="rgba(14,165,233,0.18)" stroke-width="1.5">
+    <line x1="0" y1="0" x2="0" y2="720"/><line x1="85" y1="0" x2="85" y2="720"/><line x1="170" y1="0" x2="170" y2="720"/><line x1="255" y1="0" x2="255" y2="720"/><line x1="340" y1="0" x2="340" y2="720"/><line x1="425" y1="0" x2="425" y2="720"/><line x1="510" y1="0" x2="510" y2="720"/><line x1="595" y1="0" x2="595" y2="720"/><line x1="680" y1="0" x2="680" y2="720"/><line x1="765" y1="0" x2="765" y2="720"/><line x1="850" y1="0" x2="850" y2="720"/><line x1="935" y1="0" x2="935" y2="720"/><line x1="1020" y1="0" x2="1020" y2="720"/><line x1="1105" y1="0" x2="1105" y2="720"/><line x1="1190" y1="0" x2="1190" y2="720"/><line x1="1275" y1="0" x2="1275" y2="720"/>
+    <line x1="0" y1="0" x2="1280" y2="0"/><line x1="0" y1="72" x2="1280" y2="72"/><line x1="0" y1="144" x2="1280" y2="144"/><line x1="0" y1="216" x2="1280" y2="216"/><line x1="0" y1="288" x2="1280" y2="288"/><line x1="0" y1="360" x2="1280" y2="360"/><line x1="0" y1="432" x2="1280" y2="432"/><line x1="0" y1="504" x2="1280" y2="504"/><line x1="0" y1="576" x2="1280" y2="576"/><line x1="0" y1="648" x2="1280" y2="648"/>
+  </g>
+
+  <!-- Animated Core Vectors -->
+  <g filter="url(#glow)">
+    <circle cx="757.4138795123594" cy="421.51719788633756" r="173.8579380129804" fill="none" stroke="#0ea5e9" stroke-width="4" stroke-dasharray="20 10"/>
+    <circle cx="757.4138795123594" cy="421.51719788633756" r="104.31476280778824" fill="rgba(14,165,233,0.18)" stroke="#22d3ee" stroke-width="3"/>
+    <circle cx="757.4138795123594" cy="421.51719788633756" r="20" fill="#38bdf8"/>
+
+    <!-- Orbital Nodes -->
+    <circle cx="918.3440128095824" cy="669.3278717727419" r="12" fill="#0ea5e9"/>
+    <circle cx="746.0749985459435" cy="565.5913409247316" r="14" fill="#10b981"/>
+    <circle cx="949.619543001759" cy="233.2955059782641" r="10" fill="#f59e0b"/>
+
+    <!-- Connecting Vectors -->
+    <line x1="757.4138795123594" y1="421.51719788633756" x2="918.3440128095824" y2="669.3278717727419" stroke="rgba(14,165,233,0.8)" stroke-width="2.5" stroke-dasharray="6 6"/>
+    <line x1="757.4138795123594" y1="421.51719788633756" x2="746.0749985459435" y2="565.5913409247316" stroke="rgba(16,185,129,0.8)" stroke-width="2.5" stroke-dasharray="6 6"/>
+  </g>
+</svg>
