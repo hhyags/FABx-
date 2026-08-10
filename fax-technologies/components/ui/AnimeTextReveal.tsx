@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { animate, createScope, stagger } from "animejs";
+import { useEffect, useRef, useCallback } from "react";
+import { animate, stagger } from "animejs";
 
 interface AnimeTextRevealProps {
   text: string;
@@ -19,45 +19,80 @@ export function AnimeTextReveal({
   staggerSpeed = 40,
 }: AnimeTextRevealProps) {
   const rootRef = useRef<HTMLElement>(null);
-  const scopeRef = useRef<any>(null);
+  const hasAnimated = useRef(false);
   const words = text.split(" ");
 
-  useEffect(() => {
-    if (!rootRef.current) return;
+  const runAnimation = useCallback(() => {
+    if (hasAnimated.current || !rootRef.current) return;
+    hasAnimated.current = true;
 
+    // Directly query word elements inside the root — avoids createScope binding issues
+    const wordEls = rootRef.current.querySelectorAll(".anime-word");
+    if (wordEls.length === 0) return;
+
+    animate(wordEls, {
+      opacity: [0, 1],
+      translateY: [24, 0],
+      duration: 800,
+      delay: stagger(staggerSpeed, { start: delay }),
+      ease: "out(expo)",
+    });
+  }, [delay, staggerSpeed]);
+
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+
+    // Primary trigger: IntersectionObserver with generous rootMargin
+    // to compensate for GSAP ScrollTrigger pin spacers shifting layout
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
+        for (const entry of entries) {
           if (entry.isIntersecting) {
-            scopeRef.current = createScope({ root: rootRef }).add(() => {
-              animate(".anime-word", {
-                opacity: [0, 1],
-                translateY: [24, 0],
-                duration: 800,
-                delay: stagger(staggerSpeed, { start: delay }),
-                ease: "out(expo)",
-              });
-            });
+            runAnimation();
             observer.disconnect();
+            break;
           }
-        });
+        }
       },
-      { threshold: 0.1 }
+      {
+        threshold: 0.05,
+        rootMargin: "200px 0px",
+      }
     );
 
-    observer.observe(rootRef.current);
+    observer.observe(el);
+
+    // Safety fallback: if IntersectionObserver never fires (e.g. due to GSAP
+    // pin transforms or rapid programmatic scrolling), fire the animation
+    // after a generous timeout so text never stays invisible forever.
+    const fallbackTimer = setTimeout(() => {
+      if (!hasAnimated.current) {
+        runAnimation();
+      }
+    }, 4000);
 
     return () => {
       observer.disconnect();
-      scopeRef.current?.revert();
+      clearTimeout(fallbackTimer);
     };
-  }, [text, delay, staggerSpeed]);
+  }, [text, runAnimation]);
 
   return (
-    <Component ref={rootRef as any} className={`inline-block overflow-hidden ${className}`}>
+    <Component
+      ref={rootRef as any}
+      className={`inline-block overflow-hidden ${className}`}
+    >
       {words.map((word, idx) => (
-        <span key={idx} className="inline-block overflow-hidden mr-[0.25em] vertical-align-top">
-          <span className="anime-word inline-block opacity-0 transform-gpu font-bold">
+        <span
+          key={idx}
+          className="inline-block overflow-hidden mr-[0.25em]"
+          style={{ verticalAlign: "top" }}
+        >
+          <span
+            className="anime-word inline-block transform-gpu font-bold"
+            style={{ opacity: 0 }}
+          >
             {word}
           </span>
         </span>
