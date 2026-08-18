@@ -6,9 +6,7 @@ import { CameraDirector } from "@/components/experience/CameraDirector";
 import { LightingManager } from "@/components/experience/LightingManager";
 import { ProceduralFabxLogo3D } from "@/components/hero/ProceduralFabxLogo3D";
 import { ParticleMorphSystem } from "@/components/scenes/Birth/ParticleMorphSystem";
-import { Architecture3D } from "@/components/scenes/Engineering/Architecture3D";
-import { NeuralNetwork3D } from "@/components/scenes/Network/NeuralNetwork3D";
-import { SpatialEnvironment3D } from "@/components/three/SpatialEnvironment3D";
+import { InstancedSystemNetwork } from "@/components/three/InstancedSystemNetwork";
 import { TimelineController } from "@/lib/experience/engine/TimelineController";
 import { performanceManager } from "@/lib/experience/engine/PerformanceManager";
 
@@ -42,17 +40,11 @@ function MasterSceneContent({ reducedMotion }: { reducedMotion: boolean }) {
       <ParticleMorphSystem reducedMotion={reducedMotion} />
 
       <Suspense fallback={null}>
-        {/* Chapter 05 & 06 Spatial 3D Environment with floating project cards & live demo links */}
-        <SpatialEnvironment3D />
+        {/* Instanced 3D Technical Network (Single Draw Call, Coordinated 3D Transformation System) */}
+        <InstancedSystemNetwork />
 
         {/* 3D Metallic FABX Emblem active across scenes */}
         <ProceduralFabxLogo3D reducedMotion={reducedMotion} />
-
-        {/* Chapter 03 & 04 Neural Network 3D Constellation */}
-        <NeuralNetwork3D />
-
-        {/* Chapter 04 Architecture 3D Component */}
-        <Architecture3D />
       </Suspense>
     </>
   );
