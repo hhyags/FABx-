@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { AppWindow, ExternalLink, X, Play, Activity, Cpu, Layers } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import { MengToCard } from "@/components/ui/mengto-card";
 import { revealUp, fadeIn, staggerContainer } from "@/lib/animation/motion";
 
 const osApps = [
@@ -85,17 +86,16 @@ export function ProductsOverlay() {
           </motion.p>
         </motion.div>
 
-        {/* Application Icons Launcher Grid */}
+        {/* Application Icons Launcher Grid with Meng To Glass Tilt Physics */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {osApps.map((app, idx) => (
-            <motion.div
+          {osApps.map((app) => (
+            <MengToCard
               key={app.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
-              transition={{ delay: idx * 0.1, duration: 0.6 }}
               onClick={() => setActiveApp(app)}
-              className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-[#0b0c10]/90 p-6 backdrop-blur-2xl transition-all duration-500 hover:border-[hsl(192,82%,46%)] hover:shadow-[0_0_40px_rgba(23,176,204,0.2)]"
+              tint="rgba(11, 12, 16, 0.9)"
+              maxTilt={10}
+              depthZ={30}
+              className="cursor-pointer"
             >
               {/* Top OS App Bar */}
               <div className="flex items-center justify-between font-mono text-[10px] text-white/40 mb-4">
@@ -140,7 +140,7 @@ export function ProductsOverlay() {
                 <span>LATENCY: {app.metrics.latency}</span>
                 <span>MEM: {app.metrics.memory}</span>
               </div>
-            </motion.div>
+            </MengToCard>
           ))}
         </div>
       </div>
