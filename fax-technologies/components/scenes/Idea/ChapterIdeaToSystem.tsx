@@ -60,7 +60,7 @@ export function ChapterIdeaToSystem() {
     <section
       ref={containerRef}
       id="idea-to-system"
-      className="relative min-h-[75vh] flex flex-col justify-center px-6 py-28 md:px-12 bg-[#050505] text-white"
+      className="relative min-h-[75vh] flex flex-col justify-center px-6 py-28 md:px-12 text-white"
     >
       <div className="max-w-5xl mx-auto w-full z-10 space-y-12">
         <div className="text-center max-w-2xl mx-auto space-y-3">
@@ -70,7 +70,7 @@ export function ChapterIdeaToSystem() {
           <h3 className="font-display text-3xl sm:text-5xl font-bold">
             The Transformation Pipeline.
           </h3>
-          <p className="text-white/50 text-sm sm:text-base">
+          <p className="text-white/60 text-sm sm:text-base">
             How raw concepts transform into autonomous software products.
           </p>
         </div>
@@ -108,13 +108,13 @@ export function ChapterIdeaToSystem() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: false, amount: 0.5 }}
                   transition={{ duration: 0.5, delay: idx * 0.15 }}
-                  className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl text-center space-y-3 hover:border-cyan-400/40 transition-colors"
+                  className="p-6 rounded-2xl border border-white/15 bg-black/40 backdrop-blur-xl text-center space-y-3 hover:border-cyan-400/40 transition-colors"
                 >
                   <div className="size-12 rounded-xl bg-white/5 border border-white/10 grid place-items-center mx-auto">
                     <Icon className={`size-6 ${node.color}`} />
                   </div>
                   <div className="font-mono text-xs font-bold text-white">{node.label}</div>
-                  <div className="font-mono text-[10px] text-white/40">STAGE 0{idx + 1}</div>
+                  <div className="font-mono text-[10px] text-white/50">STAGE 0{idx + 1}</div>
                 </motion.div>
               );
             })}

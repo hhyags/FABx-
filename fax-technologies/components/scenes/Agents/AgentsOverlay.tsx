@@ -92,7 +92,6 @@ export function AgentsOverlay() {
     const els = diagramRef.current.querySelectorAll(".anime-node");
     if (els.length === 0) return;
 
-    // Anime.js SVG node pulse for active capability diagram
     const animation = animate(els, {
       scale: [0.95, 1.05, 0.95],
       opacity: [0.7, 1, 0.7],
@@ -110,7 +109,7 @@ export function AgentsOverlay() {
   return (
     <section
       id="capabilities"
-      className="relative flex min-h-screen items-center px-6 py-40 md:px-12 md:py-52 bg-[#050505] text-white"
+      className="relative flex min-h-screen items-center px-6 py-40 md:px-12 md:py-52 text-white"
     >
       <div className="container-editorial relative z-10 w-full space-y-16">
         <div className="max-w-3xl space-y-4">
@@ -120,7 +119,7 @@ export function AgentsOverlay() {
           <h2 className="font-display text-4xl sm:text-7xl font-bold tracking-tight">
             Interactive Capability System.
           </h2>
-          <p className="text-white/50 text-base sm:text-lg">
+          <p className="text-white/60 text-base sm:text-lg">
             Modules engineered inside the FABX architecture. Click or select a capability to inspect its live technical topology.
           </p>
         </div>
@@ -134,7 +133,7 @@ export function AgentsOverlay() {
               className={`px-5 py-2.5 rounded-full font-mono text-xs tracking-wider transition-all ${
                 activeTab.id === item.id
                   ? "bg-white text-black font-bold shadow-[0_0_30px_rgba(255,255,255,0.4)]"
-                  : "border border-white/10 bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
+                  : "border border-white/10 bg-black/40 backdrop-blur-md text-white/70 hover:text-white hover:bg-white/10"
               }`}
             >
               {item.title}
@@ -152,7 +151,7 @@ export function AgentsOverlay() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.4 }}
-              className="lg:col-span-6 p-8 sm:p-10 rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-2xl space-y-6"
+              className="lg:col-span-6 p-8 sm:p-10 rounded-3xl border border-white/15 bg-black/50 backdrop-blur-2xl space-y-6"
             >
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest">
@@ -169,7 +168,7 @@ export function AgentsOverlay() {
                 {activeTab.title}
               </h3>
 
-              <p className="text-white/70 text-sm sm:text-base leading-relaxed font-sans">
+              <p className="text-white/80 text-sm sm:text-base leading-relaxed font-sans">
                 {activeTab.desc}
               </p>
 

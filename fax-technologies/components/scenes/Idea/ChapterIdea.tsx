@@ -12,7 +12,7 @@ export function ChapterIdea() {
   return (
     <section
       id="idea"
-      className="relative flex min-h-[85vh] items-center justify-center px-6 py-32 md:px-12 bg-[#050505] text-white overflow-hidden"
+      className="relative flex min-h-[85vh] items-center justify-center px-6 py-32 md:px-12 text-white overflow-hidden"
     >
       {/* Thin Visual Thread Entry from Video */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-24 bg-gradient-to-b from-cyan-400 to-transparent opacity-60" />
@@ -69,7 +69,7 @@ export function ChapterIdea() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.8, delay: 0.7 }}
-          className="text-white/50 text-base sm:text-lg max-w-xl mx-auto font-sans leading-relaxed pt-4"
+          className="text-white/70 text-base sm:text-lg max-w-xl mx-auto font-sans leading-relaxed pt-4"
         >
           Before code, before algorithms, before infrastructure—great systems emerge from singular problem clarity.
         </motion.p>

@@ -15,26 +15,26 @@ export function ContinuousNeuralBackground() {
 
     const video = videoRef.current;
 
-    // Synchronize video opacity / playback rate subtly with Lenis scroll progress
     function onScroll() {
       const progress = TimelineController.getProgress();
 
-      // Show neural video starting at Chapter 01 (progress >= 0.15) down to the footer
+      // Show video starting at Chapter 01 (progress >= 0.12) down to the footer
       if (containerRef.current) {
-        if (progress >= 0.15) {
+        if (progress >= 0.12) {
           containerRef.current.style.opacity = "1";
         } else {
           containerRef.current.style.opacity = "0";
         }
       }
 
-      // Slightly alter playback speed based on scroll velocity
       if (video) {
-        video.playbackRate = 0.85 + Math.min(progress * 0.4, 0.4);
+        video.playbackRate = 0.9 + Math.min(progress * 0.3, 0.3);
       }
     }
 
     window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
     return () => window.removeEventListener("scroll", onScroll);
   }, [reducedMotion]);
 
@@ -43,9 +43,9 @@ export function ContinuousNeuralBackground() {
   return (
     <div
       ref={containerRef}
-      className="pointer-events-none fixed inset-0 z-0 h-screen w-screen overflow-hidden transition-opacity duration-1000 opacity-0"
+      className="pointer-events-none fixed inset-0 z-0 h-screen w-screen overflow-hidden transition-opacity duration-700 opacity-0"
     >
-      {/* Background Neural AI Video Loop */}
+      {/* HTML Video Background replacing solid black screen */}
       <video
         ref={videoRef}
         autoPlay
@@ -53,14 +53,14 @@ export function ContinuousNeuralBackground() {
         muted
         playsInline
         disablePictureInPicture
-        className="h-full w-full object-cover opacity-25 filter blur-[1px] mix-blend-screen scale-105"
+        className="h-full w-full object-cover opacity-60 filter blur-[0.5px] scale-105"
       >
         <source src="/videos/fabx_cine.mp4" type="video/mp4" />
       </video>
 
-      {/* Dark Radial Contrast Vignette to Guarantee Text & UI Readability */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(5,5,5,0.4)_0%,#050505_85%)]" />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-transparent to-[#050505]" />
+      {/* Subtle Translucent Overlay for High-Contrast Text Readability */}
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/80 via-transparent to-[#050505]/90" />
     </div>
   );
 }
