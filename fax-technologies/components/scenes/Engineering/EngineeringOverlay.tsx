@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { revealUp, fadeIn, staggerContainer } from "@/lib/animation/motion";
 import { AnimeTextReveal } from "@/components/ui/AnimeTextReveal";
 import { AnimeCardHover } from "@/components/ui/AnimeCardHover";
+import { MovingTypography } from "@/components/ui/moving-typography";
+import { MotionWidget } from "@/components/ui/motion-widget";
 
 const osServices = [
   { id: "api", icon: Server, title: "API Gateway", status: "200 OK", load: "1.2k req/s", delay: 0 },
@@ -30,31 +32,43 @@ export function EngineeringOverlay() {
   return (
     <section
       id="engineering"
-      className="relative flex min-h-screen items-center px-6 py-40 md:px-12 md:py-52"
+      className="relative min-h-screen flex flex-col justify-center px-6 py-40 md:px-12 md:py-52 overflow-hidden"
     >
+      {/* Background Kinetic Ticker */}
+      <div className="absolute top-12 left-0 right-0 z-0">
+        <MovingTypography text="AUTONOMOUS AGENTS • SUB-10MS VECTOR RAG • HIGH-THROUGHPUT SYSTEM ARCHITECTURE" speed={1.2} />
+      </div>
+
       <div className="container-editorial relative z-10 w-full space-y-16">
-        <motion.div
-          className="max-w-3xl"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: false, amount: 0.3 }}
-        >
-          <motion.p variants={fadeIn} className="text-overline mb-4 text-[hsl(192,82%,46%)] font-mono">
-            CHAPTER 02 — OS SYSTEM ARCHITECTURE
-          </motion.p>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-end">
+          <motion.div
+            className="lg:col-span-2 space-y-4"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.3 }}
+          >
+            <motion.p variants={fadeIn} className="text-overline text-[hsl(192,82%,46%)] font-mono">
+              CHAPTER 02 — OS SYSTEM ARCHITECTURE
+            </motion.p>
 
-          <AnimeTextReveal
-            text="Engineered for Scale."
-            className="text-editorial text-white font-bold"
-            as="h2"
-            delay={100}
-          />
+            <AnimeTextReveal
+              text="Engineered for Scale."
+              className="text-editorial text-white font-bold"
+              as="h2"
+              delay={100}
+            />
 
-          <motion.p variants={revealUp} className="mt-4 text-body-lg text-white/50 font-sans">
-            Inside the FABX Operating System: microservices communicate via low-latency event queues and automated pipeline meshes.
-          </motion.p>
-        </motion.div>
+            <motion.p variants={revealUp} className="text-body-lg text-white/50 font-sans max-w-xl">
+              Inside the FABX Operating System: microservices communicate via low-latency event queues and automated pipeline meshes.
+            </motion.p>
+          </motion.div>
+
+          {/* Smooth Spring Pop-up HUD Widget */}
+          <div className="flex justify-start lg:justify-end">
+            <MotionWidget />
+          </div>
+        </div>
 
         {/* Floating OS Service Windows Grid */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
