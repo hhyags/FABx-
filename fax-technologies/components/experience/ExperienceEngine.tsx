@@ -23,7 +23,7 @@ export function ExperienceEngine() {
   }, []);
 
   return (
-    <main ref={containerRef} className="relative text-white bg-[#050505]">
+    <main ref={containerRef} className="relative text-white">
       {/* Continuous Neural Background Video Loop from Chapter 01 to Footer */}
       <ContinuousNeuralBackground />
 

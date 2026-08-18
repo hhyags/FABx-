@@ -64,7 +64,6 @@ export function SceneManager({ reducedMotion }: SceneManagerProps) {
         frameloop={reducedMotion ? "demand" : "always"}
         className="size-full"
       >
-        <color attach="background" args={["#050505"]} />
         <fog attach="fog" args={["#050505", 6, 25]} />
         <MasterSceneContent reducedMotion={reducedMotion} />
       </Canvas>

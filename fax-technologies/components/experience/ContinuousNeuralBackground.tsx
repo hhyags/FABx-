@@ -1,9 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import React, { useEffect, useRef } from "react";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
-import { TimelineController } from "@/lib/experience/engine/TimelineController";
 
 export function ContinuousNeuralBackground() {
   const reducedMotion = usePrefersReducedMotion();
@@ -15,27 +13,23 @@ export function ContinuousNeuralBackground() {
 
     const video = videoRef.current;
 
-    function onScroll() {
-      const progress = TimelineController.getProgress();
+    function handleScroll() {
+      if (!containerRef.current) return;
+      const scrollY = window.scrollY;
+      const heroHeight = window.innerHeight * 1.5;
 
-      // Show video starting at Chapter 01 (progress >= 0.12) down to the footer
-      if (containerRef.current) {
-        if (progress >= 0.12) {
-          containerRef.current.style.opacity = "1";
-        } else {
-          containerRef.current.style.opacity = "0";
-        }
-      }
-
-      if (video) {
-        video.playbackRate = 0.9 + Math.min(progress * 0.3, 0.3);
+      // Show neural video starting at Chapter 01 (after scrollY > heroHeight * 0.5)
+      if (scrollY > heroHeight * 0.3) {
+        containerRef.current.style.opacity = "0.85";
+      } else {
+        containerRef.current.style.opacity = "0";
       }
     }
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
 
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [reducedMotion]);
 
   if (reducedMotion) return null;
@@ -43,9 +37,9 @@ export function ContinuousNeuralBackground() {
   return (
     <div
       ref={containerRef}
-      className="pointer-events-none fixed inset-0 z-0 h-screen w-screen overflow-hidden transition-opacity duration-700 opacity-0"
+      className="pointer-events-none fixed inset-0 z-0 h-screen w-screen overflow-hidden transition-opacity duration-500 opacity-0"
     >
-      {/* HTML Video Background replacing solid black screen */}
+      {/* HTML Video Background */}
       <video
         ref={videoRef}
         autoPlay
@@ -53,14 +47,14 @@ export function ContinuousNeuralBackground() {
         muted
         playsInline
         disablePictureInPicture
-        className="h-full w-full object-cover opacity-60 filter blur-[0.5px] scale-105"
+        className="h-full w-full object-cover filter blur-[0.5px] scale-105"
       >
         <source src="/videos/fabx_cine.mp4" type="video/mp4" />
       </video>
 
-      {/* Subtle Translucent Overlay for High-Contrast Text Readability */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/80 via-transparent to-[#050505]/90" />
+      {/* Subtle Contrast Overlay for Crisp Readability */}
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-[1px]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/90 via-transparent to-[#050505]/95" />
     </div>
   );
 }
