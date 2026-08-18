@@ -26,7 +26,6 @@ export function AnimeTextReveal({
     if (hasAnimated.current || !rootRef.current) return;
     hasAnimated.current = true;
 
-    // Directly query word elements inside the root — avoids createScope binding issues
     const wordEls = rootRef.current.querySelectorAll(".anime-word");
     if (wordEls.length === 0) return;
 
@@ -43,8 +42,6 @@ export function AnimeTextReveal({
     const el = rootRef.current;
     if (!el) return;
 
-    // Primary trigger: IntersectionObserver with generous rootMargin
-    // to compensate for GSAP ScrollTrigger pin spacers shifting layout
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -63,9 +60,6 @@ export function AnimeTextReveal({
 
     observer.observe(el);
 
-    // Safety fallback: if IntersectionObserver never fires (e.g. due to GSAP
-    // pin transforms or rapid programmatic scrolling), fire the animation
-    // after a generous timeout so text never stays invisible forever.
     const fallbackTimer = setTimeout(() => {
       if (!hasAnimated.current) {
         runAnimation();
@@ -80,7 +74,7 @@ export function AnimeTextReveal({
 
   return (
     <Component
-      ref={rootRef as any}
+      ref={rootRef as unknown as React.Ref<HTMLHeadingElement & HTMLParagraphElement & HTMLSpanElement>}
       className={`inline-block overflow-hidden ${className}`}
     >
       {words.map((word, idx) => (

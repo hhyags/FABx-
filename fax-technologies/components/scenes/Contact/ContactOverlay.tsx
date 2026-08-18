@@ -1,153 +1,149 @@
 "use client";
 
-import { Terminal, Send, CheckCircle2, Power, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useActionState, useState } from "react";
-import { submitContactForm } from "@/app/actions/contact";
-import { revealUp, fadeIn, staggerContainer } from "@/lib/animation/motion";
+import { ArrowRight, CheckCircle2, Send, Sparkles } from "lucide-react";
+import React, { useState } from "react";
 
-const initialState = { success: false, message: "" };
+const wizardSteps = [
+  { id: 1, title: "What are you building?", options: ["Autonomous AI Agent / RAG Pipeline", "Enterprise SaaS / Full-Stack Web App", "Custom Analytics & Dashboard", "System Architecture & BRD Audit"] },
+  { id: 2, title: "What problem are you solving?", options: ["Automating Manual Workflows", "Scaling Database & API Throughput", "Improving UX & Conversion Speed", "Modernizing Infrastructure"] },
+  { id: 3, title: "Target Timeline", options: ["Urgent Prototype (2-3 Weeks)", "Standard Build Sprint (4-6 Weeks)", "Enterprise Rollout (2-3 Months)"] },
+];
 
 export function ContactOverlay() {
-  const [state, formAction, isPending] = useActionState(submitContactForm, initialState);
-  const [osShutdown, setOsShutdown] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [selections, setSelections] = useState<Record<number, string>>({});
+  const [submitted, setSubmitted] = useState(false);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+
+  const handleSelect = (option: string) => {
+    setSelections((prev) => ({ ...prev, [currentStep]: option }));
+    if (currentStep < wizardSteps.length - 1) {
+      setCurrentStep((prev) => prev + 1);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
 
   return (
     <section
       id="contact"
-      className="relative flex min-h-screen flex-col justify-between px-6 pt-40 pb-20 md:px-12 md:pt-52"
+      className="relative flex min-h-screen items-center px-6 py-40 md:px-12 md:py-52 bg-[#050505] text-white"
     >
-      <div className="container-editorial relative z-10 w-full my-auto space-y-16">
-        <motion.div
-          className="max-w-3xl mx-auto text-center"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: false, amount: 0.3 }}
-        >
-          <motion.p variants={fadeIn} className="text-overline mb-4 text-[hsl(192,82%,46%)] font-mono">
-            CHAPTER 09 — INTERACTIVE TERMINAL DISPATCH
-          </motion.p>
-          <motion.h2 variants={revealUp} className="text-editorial text-white">
-            Ready to Engineer <br />
-            <span className="text-[hsl(192,82%,46%)]">Your Next Product?</span>
-          </motion.h2>
-          <motion.p variants={revealUp} className="mt-4 text-body-lg text-white/50 font-sans max-w-xl mx-auto">
-            Execute the project submission command inside the terminal prompt below.
-          </motion.p>
-        </motion.div>
-
-        {/* Interactive Terminal Window */}
-        <div className="max-w-3xl mx-auto rounded-2xl border border-white/15 bg-[#0a0c10]/95 p-6 md:p-8 backdrop-blur-2xl font-mono text-xs shadow-2xl space-y-6">
-          <div className="flex items-center justify-between border-b border-white/10 pb-4">
-            <div className="flex items-center gap-2">
-              <Terminal className="size-4 text-[hsl(192,82%,46%)]" />
-              <span className="font-bold text-white">WARP TERMINAL &gt; create-project</span>
-            </div>
-            <span className="text-[10px] text-white/40">FABX OS TERMINAL PROMPT</span>
-          </div>
-
-          {state.success ? (
-            <div className="space-y-4 py-8 text-center">
-              <CheckCircle2 className="size-10 text-emerald-400 mx-auto" />
-              <div className="text-emerald-400 font-bold text-base">$ Project Received!</div>
-              <div className="text-white/60 text-xs">We&apos;ll engineer something amazing. Response within 24 hours.</div>
-              <button
-                onClick={() => setOsShutdown(true)}
-                className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-2.5 text-xs text-white hover:bg-white/10"
-              >
-                <Power className="size-3.5 text-rose-400" />
-                <span>Shutdown OS Session</span>
-              </button>
-            </div>
-          ) : (
-            <form action={formAction} className="space-y-5">
-              <div className="space-y-1 text-white/70">
-                <span className="text-emerald-400 font-bold">$ create-project --interactive</span>
-              </div>
-
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="name" className="block text-[10px] text-white/40 uppercase mb-1">
-                    [1] Full Name *
-                  </label>
-                  <input
-                    id="name"
-                    type="text"
-                    name="name"
-                    required
-                    placeholder="John Doe"
-                    className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-xs text-white placeholder:text-white/20 focus:border-[hsl(192,82%,46%)] focus:outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="email" className="block text-[10px] text-white/40 uppercase mb-1">
-                    [2] Email Address *
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    required
-                    placeholder="john@company.com"
-                    className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-xs text-white placeholder:text-white/20 focus:border-[hsl(192,82%,46%)] focus:outline-none"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-[10px] text-white/40 uppercase mb-1">
-                  [3] Project Scope & Business Goals *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={3}
-                  required
-                  placeholder="Describe your AI agent, enterprise platform, or cloud software scope..."
-                  className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-xs text-white placeholder:text-white/20 focus:border-[hsl(192,82%,46%)] focus:outline-none"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isPending}
-                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-white py-3.5 font-display text-xs font-bold text-black hover:bg-white/90 transition-all"
-              >
-                {isPending ? "Executing Dispatch..." : "Execute Submit Project Command"}
-                <Send className="size-3.5" />
-              </button>
-            </form>
-          )}
+      <div className="max-w-4xl mx-auto z-10 w-full space-y-12">
+        <div className="text-center space-y-3">
+          <p className="font-mono text-xs uppercase tracking-[0.35em] text-cyan-400">
+            CHAPTER 09 — PROJECT INITIATION
+          </p>
+          <h2 className="font-display text-4xl sm:text-7xl font-bold">
+            Start Your Build.
+          </h2>
+          <p className="text-white/50 text-base sm:text-lg max-w-xl mx-auto">
+            Interactive project initiation wizard. Define your scope before line one of code.
+          </p>
         </div>
 
-        {/* Final OS Shutdown Overlay Modal */}
-        <AnimatePresence>
-          {osShutdown && (
+        {/* Wizard Container */}
+        <div className="p-8 sm:p-12 rounded-3xl border border-white/15 bg-white/[0.03] backdrop-blur-2xl">
+          {submitted ? (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-[#050505] p-6 text-center font-mono"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="text-center py-12 space-y-4"
             >
-              <div className="space-y-6 max-w-md">
-                <div className="size-3 rounded-full bg-rose-500 mx-auto animate-ping" />
-                <div className="text-white font-bold text-lg">FABX OS SHUTDOWN COMPLETE</div>
-                <div className="text-xs text-white/40 leading-relaxed">
-                  Session ended. Logs archived. Ready to engineer your next product.
-                </div>
-                <button
-                  onClick={() => setOsShutdown(false)}
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 font-display text-xs font-bold text-black hover:bg-white/90"
-                >
-                  <span>Reboot System (Start a Project)</span>
-                  <ArrowRight className="size-3.5" />
-                </button>
-              </div>
+              <CheckCircle2 className="size-16 text-emerald-400 mx-auto" />
+              <h3 className="font-display text-3xl font-bold">Project Scope Received</h3>
+              <p className="text-white/70 max-w-md mx-auto">
+                Thank you {name || "Client"}! We have received your project requirements and will reach out within 24 hours.
+              </p>
             </motion.div>
+          ) : (
+            <div className="space-y-8">
+              {/* Step Progress Dots */}
+              <div className="flex items-center justify-between font-mono text-xs text-cyan-400 border-b border-white/10 pb-4">
+                <span>STEP 0{currentStep + 1} OF 04</span>
+                <span>{currentStep === wizardSteps.length ? "CONTACT DETAILS" : wizardSteps[currentStep].title}</span>
+              </div>
+
+              {/* Step Content */}
+              <AnimatePresence mode="wait">
+                {currentStep < wizardSteps.length ? (
+                  <motion.div
+                    key={currentStep}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="space-y-6"
+                  >
+                    <h3 className="font-display text-2xl font-semibold">
+                      {wizardSteps[currentStep].title}
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {wizardSteps[currentStep].options.map((option) => (
+                        <button
+                          key={option}
+                          onClick={() => handleSelect(option)}
+                          className={`p-5 rounded-2xl border font-mono text-xs text-left transition-all ${
+                            selections[currentStep] === option
+                              ? "border-cyan-400 bg-cyan-950/40 text-white font-bold"
+                              : "border-white/10 bg-white/5 text-white/70 hover:border-white/30 hover:bg-white/10"
+                          }`}
+                        >
+                          {option}
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    key="final-step"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    onSubmit={handleSubmit}
+                    className="space-y-6"
+                  >
+                    <h3 className="font-display text-2xl font-semibold">Enter Direct Contact Details</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block font-mono text-xs text-white/60 mb-2">YOUR NAME *</label>
+                        <input
+                          type="text"
+                          required
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder="Surya / Client Name"
+                          className="w-full rounded-xl border border-white/15 bg-black/60 px-4 py-3 text-sm text-white placeholder:text-white/30 focus:border-cyan-400 focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-mono text-xs text-white/60 mb-2">EMAIL ADDRESS *</label>
+                        <input
+                          type="email"
+                          required
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="client@company.com"
+                          className="w-full rounded-xl border border-white/15 bg-black/60 px-4 py-3 text-sm text-white placeholder:text-white/30 focus:border-cyan-400 focus:outline-none"
+                        />
+                      </div>
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full py-4 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition-colors flex items-center justify-center gap-2"
+                    >
+                      Submit Project Initiation <Send className="size-4" />
+                    </button>
+                  </motion.form>
+                )}
+              </AnimatePresence>
+            </div>
           )}
-        </AnimatePresence>
+        </div>
       </div>
     </section>
   );

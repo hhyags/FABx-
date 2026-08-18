@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { AnimeTextReveal } from "@/components/ui/AnimeTextReveal";
-import { Network, Server, Database, Cloud, Cpu, Activity, X, RefreshCw } from "lucide-react";
+import { Network, Server, Database, Cloud, Cpu, Activity, X } from "lucide-react";
 
 const stackNodes = [
   { id: "node1", title: "API Gateway", role: "Request Routing & Auth", icon: Server, latency: "2ms", tech: "Kong / NGINX / Cloudflare Workers", desc: "Edge routing layer managing zero-trust authentication, rate-limiting, and micro-frontend path mapping." },
@@ -30,7 +30,7 @@ export function Section06TechStack() {
             as="h2"
           />
           <p className="text-white/50 text-base sm:text-lg font-sans leading-relaxed">
-            We don't just pick tools — we architect interconnected node networks that process data packets with sub-50ms round-trip latency. Click any cluster node to inspect system metrics.
+            We don&apos;t just pick tools — we architect interconnected node networks that process data packets with sub-50ms round-trip latency. Click any cluster node to inspect system metrics.
           </p>
         </div>
 

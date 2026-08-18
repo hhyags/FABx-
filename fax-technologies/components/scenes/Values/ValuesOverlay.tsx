@@ -1,45 +1,50 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { revealUp, fadeIn, staggerContainer } from "@/lib/animation/motion";
+import React from "react";
+
+const valueStatements = [
+  { statement: "Build with precision.", desc: "Every architecture, API signature, and state mutation is documented and type-checked before deployment." },
+  { statement: "Design for people.", desc: "Software must feel effortless. Immersion earns trust—it never replaces proof." },
+  { statement: "Engineer for scale.", desc: "Sub-10ms response times, vector indexing, and serverless edge deployment built for commercial velocity." },
+];
 
 export function ValuesOverlay() {
   return (
     <section
       id="values"
-      className="relative flex min-h-screen items-center justify-center px-6 py-40 text-center md:px-12 md:py-52"
+      className="relative flex min-h-screen items-center px-6 py-40 md:px-12 md:py-52 bg-[#050505] text-white"
     >
-      <div className="container-editorial relative z-10 max-w-4xl">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: false, amount: 0.4 }}
-          className="space-y-12"
-        >
-          <motion.p variants={fadeIn} className="text-overline">
-            Chapter 08 — Trust
-          </motion.p>
+      <div className="max-w-4xl mx-auto z-10 w-full space-y-24">
+        <div className="text-center space-y-3">
+          <p className="font-mono text-xs uppercase tracking-[0.35em] text-cyan-400">
+            CHAPTER 08 — CORE PHILOSOPHY
+          </p>
+          <h2 className="font-display text-4xl sm:text-6xl font-bold">
+            Engineering Values.
+          </h2>
+        </div>
 
-          <motion.div variants={revealUp} className="space-y-6">
-            <h2 className="font-display text-[clamp(2.5rem,5.5vw,5.5rem)] font-bold tracking-tight text-white leading-none">
-              Built with precision.
-            </h2>
-            <h2 className="font-display text-[clamp(2.5rem,5.5vw,5.5rem)] font-bold tracking-tight text-white/70 leading-none">
-              Engineered for scale.
-            </h2>
-            <h2 className="font-display text-[clamp(2.5rem,5.5vw,5.5rem)] font-bold tracking-tight text-[hsl(192,82%,46%)] leading-none">
-              Designed for people.
-            </h2>
-          </motion.div>
-
-          <motion.p
-            variants={revealUp}
-            className="mx-auto max-w-xl text-body-lg text-white/35 leading-relaxed"
-          >
-            No decorative fluff. No unverified claims. Pure engineering discipline.
-          </motion.p>
-        </motion.div>
+        {/* Quiet Typography Moments */}
+        <div className="space-y-20">
+          {valueStatements.map((item, idx) => (
+            <motion.div
+              key={item.statement}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.5 }}
+              transition={{ duration: 0.8, delay: idx * 0.2 }}
+              className="p-10 rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-xl space-y-4 hover:border-cyan-400/40 transition-colors"
+            >
+              <h3 className="font-display text-3xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-cyan-400">
+                {item.statement}
+              </h3>
+              <p className="text-white/60 text-base sm:text-lg max-w-2xl leading-relaxed font-sans">
+                {item.desc}
+              </p>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

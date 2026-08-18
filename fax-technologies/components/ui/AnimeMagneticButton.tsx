@@ -64,23 +64,34 @@ export function AnimeMagneticButton({
     });
   };
 
-  const props = {
-    ref: btnRef as any,
-    onMouseMove: handleMouseMove,
-    onMouseLeave: handleMouseLeave,
-    onMouseDown: handleMouseDown,
-    onMouseUp: handleMouseUp,
-    onClick,
-    className: `inline-flex items-center justify-center transition-shadow cursor-pointer select-none ${className}`,
-  };
-
   if (href) {
     return (
-      <a href={href} {...props}>
+      <a
+        ref={btnRef as unknown as React.Ref<HTMLAnchorElement>}
+        href={href}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onClick={onClick}
+        className={`inline-flex items-center justify-center transition-shadow cursor-pointer select-none ${className}`}
+      >
         {children}
       </a>
     );
   }
 
-  return <button {...props}>{children}</button>;
+  return (
+    <button
+      ref={btnRef as unknown as React.Ref<HTMLButtonElement>}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onClick={onClick}
+      className={`inline-flex items-center justify-center transition-shadow cursor-pointer select-none ${className}`}
+    >
+      {children}
+    </button>
+  );
 }
